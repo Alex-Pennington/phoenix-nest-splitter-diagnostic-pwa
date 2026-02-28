@@ -1,0 +1,9 @@
+.tbl{width:100%;border-collapse:collapse;font-size:.72rem}
+.tbl th{background:var(--bg4);color:var(--accent);font-family:var(--mono);font-weight:600;font-size:.65rem;text-transform:uppercase;letter-spacing:.04em;padding:.5rem .4rem;text-align:left;position:sticky;top:0;z-index:2}
+.tbl td{padding:.45rem .4rem;border-bottom:1px solid var(--bg3);color:var(--fg2);vertical-align:top}
+.tbl tr:hover td{background:var(--bg3)}
+.tbl .wire-id{font-family:var(--mono);font-weight:600;color:var(--fg)}
+.tbl .wire-red{color:var(--red);font-weight:600}
+.tbl .wire-blk{color:var(--fg);font-weight:600}
+.tbl .wire-grn{color:var(--green);font-weight:600}
+.tbl .unused{color:var(--fg3);font-style:italic}

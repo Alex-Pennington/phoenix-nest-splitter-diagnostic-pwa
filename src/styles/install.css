@@ -1,0 +1,39 @@
+.install-phase{margin-bottom:1rem}
+.phase-header{display:flex;align-items:center;gap:.5rem;padding:.6rem .7rem;background:var(--bg3);border:1px solid var(--bg4);border-radius:8px;cursor:pointer;user-select:none;-webkit-user-select:none;transition:all .15s}
+.phase-header:active{background:var(--bg4)}
+.phase-header .phase-icon{font-size:1.2rem}
+.phase-header .phase-title{font-family:var(--mono);font-size:.78rem;font-weight:600;color:var(--fg);flex:1}
+.phase-header .phase-count{font-family:var(--mono);font-size:.6rem;color:var(--fg3)}
+.phase-header .phase-arrow{color:var(--fg3);transition:transform .2s;font-size:.8rem}
+.phase-header.open .phase-arrow{transform:rotate(90deg)}
+.phase-header.open{border-color:var(--accent);background:var(--bg2)}
+.phase-header.done{border-color:var(--green);opacity:.7}
+.phase-header.done .phase-title{color:var(--green)}
+
+.phase-steps{display:none;padding:.4rem 0 0}
+.phase-steps.open{display:block}
+
+.inst-step{background:var(--bg2);border:1px solid var(--bg4);border-radius:8px;padding:.65rem .7rem;margin-bottom:.35rem;transition:all .15s}
+.inst-step.completed{opacity:.5;border-color:var(--green)}
+.inst-step.completed .step-action{text-decoration:line-through;text-decoration-color:var(--fg3)}
+
+.step-top{display:flex;align-items:flex-start;gap:.5rem}
+.step-check{width:22px;height:22px;border:2px solid var(--bg4);border-radius:5px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:.05rem;font-size:.7rem;color:transparent}
+.step-check:hover{border-color:var(--accent)}
+.step-check.checked{background:var(--green);border-color:var(--green);color:var(--bg)}
+
+.step-num{font-family:var(--mono);font-size:.7rem;font-weight:600;color:var(--accent);min-width:28px;flex-shrink:0;margin-top:.05rem}
+.step-action{font-size:.78rem;color:var(--fg);line-height:1.5;flex:1}
+.step-action .wire-ref{font-family:var(--mono);font-weight:600;color:var(--cyan);font-size:.74rem}
+.step-warn{color:var(--yellow);font-weight:600}
+
+.step-test{background:var(--bg3);border-left:3px solid var(--yellow);border-radius:0 8px 8px 0;padding:.55rem .7rem;margin:.35rem 0 0 30px;font-size:.74rem;line-height:1.6;color:var(--fg2);animation:fadeSlide .2s ease}
+.step-test .test-title{font-family:var(--mono);font-size:.65rem;font-weight:600;color:var(--yellow);margin-bottom:.25rem}
+.step-test .test-line{margin-bottom:.15rem}
+.step-test .expected{color:var(--green);font-weight:500}
+.step-test .if-fail{color:var(--red)}
+
+.install-progress{background:var(--bg2);border:1px solid var(--bg4);border-radius:8px;padding:.5rem .7rem;margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem}
+.prog-bar-wrap{flex:1;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.prog-bar{height:100%;background:var(--green);border-radius:3px;transition:width .3s}
+.prog-text{font-family:var(--mono);font-size:.65rem;color:var(--fg3);min-width:42px;text-align:right}

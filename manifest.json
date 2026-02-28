@@ -1,0 +1,15 @@
+{
+  "name": "Log Splitter — Phoenix Nest",
+  "short_name": "Splitter",
+  "description": "Troubleshooting & wiring reference for Phoenix Nest log splitter",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0c0f14",
+  "theme_color": "#e8984a",
+  "orientation": "portrait",
+  "icons": [{
+    "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='32' fill='%230c0f14'/%3E%3Ctext x='96' y='125' font-size='110' text-anchor='middle' fill='%23e8984a'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E",
+    "sizes": "192x192",
+    "type": "image/svg+xml"
+  }]
+}

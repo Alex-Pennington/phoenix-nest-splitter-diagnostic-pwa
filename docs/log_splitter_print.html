@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log Splitter Wiring Schematic — Phoenix Nest LLC</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family:'IBM Plex Sans',sans-serif;
+    color:#111;
+    background:#fff;
+    padding:0;
+    margin:0;
+  }
+
+  /* ---- SCREEN STYLES ---- */
+  @media screen {
+    body { padding:1rem; background:#e8e8e4; }
+    .page { background:#fff; max-width:11in; margin:0 auto 1rem; padding:.5in; box-shadow:0 2px 8px rgba(0,0,0,.15); }
+    .print-btn {
+      position:fixed; top:1rem; right:1rem; z-index:100;
+      background:#111; color:#fff; border:none; padding:.6rem 1.4rem;
+      font-family:'IBM Plex Mono',monospace; font-size:.85rem;
+      cursor:pointer; border-radius:4px;
+    }
+    .print-btn:hover { background:#333; }
+  }
+
+  /* ---- PRINT STYLES ---- */
+  @media print {
+    @page {
+      size: landscape;
+      margin: 0.35in;
+    }
+    body { background:#fff; padding:0; }
+    .print-btn { display:none; }
+    .page {
+      page-break-after: always;
+      padding:0;
+      margin:0;
+      width:100%;
+      max-width:none;
+    }
+    .page:last-child { page-break-after:avoid; }
+    svg { width:100% !important; height:auto !important; }
+  }
+
+  /* ---- SHARED LAYOUT ---- */
+  .page { position:relative; }
+
+  .header {
+    display:flex; justify-content:space-between; align-items:flex-end;
+    border-bottom:2.5px solid #111; padding-bottom:.3rem; margin-bottom:.35rem;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .header .left { font-size:.7rem; color:#555; line-height:1.5; }
+  .header .left strong { font-size:.85rem; color:#111; display:block; }
+  .header .right { text-align:right; font-size:.65rem; color:#555; line-height:1.5; }
+  .header .right strong { font-size:.75rem; color:#111; display:block; }
+
+  .sheet-title {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.75rem; font-weight:700; color:#111;
+    text-align:center; margin:.25rem 0 .15rem;
+    text-transform:uppercase; letter-spacing:.08em;
+  }
+
+  .svg-wrap {
+    border:1.5px solid #111;
+    padding:.25rem;
+    background:#fff;
+  }
+
+  svg text { font-family:'IBM Plex Mono',monospace; }
+
+  /* Page 2 styles */
+  .two-col { display:flex; gap:.5rem; margin-top:.35rem; }
+  .two-col > div { flex:1; }
+
+  .info-box {
+    border:1px solid #333;
+    padding:.4rem .5rem;
+    margin-bottom:.4rem;
+  }
+  .info-box h3 {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.6rem; font-weight:700;
+    text-transform:uppercase; letter-spacing:.06em;
+    border-bottom:1px solid #999; padding-bottom:.2rem; margin-bottom:.3rem;
+  }
+  .row { display:flex; gap:.35rem; margin-bottom:.15rem; font-size:.62rem; line-height:1.5; }
+  .row .t { font-family:'IBM Plex Mono',monospace; font-weight:700; min-width:48px; flex-shrink:0; }
+  .row .d { color:#333; }
+  .row b { font-weight:600; }
+
+  .note-box {
+    border:1px solid #333; border-left:3px solid #111;
+    padding:.35rem .5rem; margin-top:.35rem;
+    font-size:.6rem; line-height:1.6; color:#222;
+  }
+  .note-box strong { font-family:'IBM Plex Mono',monospace; font-weight:700; }
+
+  .footer {
+    border-top:1px solid #999; margin-top:.3rem; padding-top:.2rem;
+    font-family:'IBM Plex Mono',monospace; font-size:.55rem; color:#888;
+    display:flex; justify-content:space-between;
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">⎙ Print</button>
+
+<!-- ============================================================
+     PAGE 1: SCHEMATIC
+     ============================================================ -->
+<div class="page">
+
+<div class="header">
+  <div class="left">
+    <strong>PHOENIX NEST LLC</strong>
+    Log Splitter — Auto Extend / Return<br>
+    Electrical Wiring Schematic
+  </div>
+  <div class="right">
+    <strong>DWG: PN-LS-002 Rev A</strong>
+    12VDC · 2× DPDT Relay<br>
+    February 2026
+  </div>
+</div>
+
+<div class="svg-wrap">
+<svg viewBox="0 0 920 680" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <style>
+    .w{stroke:#111;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .wr{stroke:#111;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .wg{stroke:#111;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .wd{stroke:#555;stroke-width:.7;fill:none;stroke-dasharray:3,2.5}
+    .dot{fill:#111}
+    .L{font-size:10.5px;fill:#111;font-weight:600}
+    .Ls{font-size:8px;fill:#444;font-weight:400}
+    .Lh{font-size:11px;fill:#111;font-weight:700}
+    .cf{fill:#f8f8f6;stroke:#111;stroke-width:1.3}
+    .ck{fill:#eee;stroke:#111;stroke-width:1.3}
+    .cs{fill:#e8e8e2;stroke:#111;stroke-width:1.3}
+  </style>
+</defs>
+
+<!-- ================= SECTION LABELS ================= -->
+<text x="460" y="18" class="Lh" text-anchor="middle">POWER &amp; E-STOP</text>
+<line x1="80" y1="23" x2="840" y2="23" stroke="#bbb" stroke-width=".5"/>
+
+<text x="460" y="158" class="Lh" text-anchor="middle">MANUAL JOG — FORWARD</text>
+<line x1="80" y1="163" x2="840" y2="163" stroke="#bbb" stroke-width=".5"/>
+
+<text x="460" y="248" class="Lh" text-anchor="middle">MANUAL JOG — BACKWARD</text>
+<line x1="80" y1="253" x2="840" y2="253" stroke="#bbb" stroke-width=".5"/>
+
+<text x="460" y="338" class="Lh" text-anchor="middle">AUTO CYCLE</text>
+<line x1="80" y1="343" x2="840" y2="343" stroke="#bbb" stroke-width=".5"/>
+
+
+<!-- ========== POWER ========== -->
+<text x="72" y="50" class="L" text-anchor="middle">12V</text>
+<text x="72" y="60" class="L" text-anchor="middle">BATT</text>
+<!-- battery -->
+<line x1="60" y1="66" x2="84" y2="66" class="w" stroke-width="3"/>
+<text x="50" y="70" class="Ls" font-weight="600">+</text>
+<line x1="63" y1="74" x2="81" y2="74" class="w" stroke-width="1.5"/>
+<line x1="60" y1="82" x2="84" y2="82" class="w" stroke-width="3"/>
+<line x1="63" y1="90" x2="81" y2="90" class="w" stroke-width="1.5"/>
+<text x="50" y="94" class="Ls" font-weight="600">−</text>
+
+<!-- +12V out -->
+<line x1="84" y1="66" x2="140" y2="66" class="w"/>
+<!-- fuse -->
+<rect x="140" y="58" width="36" height="16" rx="3" class="cf"/>
+<text x="158" y="70" class="L" text-anchor="middle" font-size="8">15A</text>
+<text x="158" y="54" class="Ls" text-anchor="middle">FUSE</text>
+<line x1="176" y1="66" x2="230" y2="66" class="w"/>
+
+<!-- E-STOP NC -->
+<rect x="230" y="48" width="65" height="36" rx="3" class="cf" style="fill:#f5f0f0"/>
+<!-- NC contact symbol -->
+<line x1="244" y1="63" x2="252" y2="63" class="w" stroke-width="1.5"/>
+<line x1="278" y1="63" x2="286" y2="63" class="w" stroke-width="1.5"/>
+<line x1="252" y1="63" x2="278" y2="63" class="w" stroke-width="1.5"/>
+<line x1="263" y1="56" x2="263" y2="63" class="w" stroke-width="1.5"/>
+<text x="262" y="46" class="L" text-anchor="middle" font-size="9">E-STOP</text>
+<text x="310" y="64" class="Ls">NC contact</text>
+
+<line x1="295" y1="66" x2="370" y2="66" class="w"/>
+<!-- Main bus node -->
+<circle cx="370" cy="66" r="3.5" class="dot"/>
+<text x="370" y="56" class="Ls" text-anchor="middle" font-weight="600">+12V BUS (A)</text>
+
+<!-- Bus line down (dashed guide) -->
+<line x1="370" y1="66" x2="370" y2="640" class="w" stroke-width=".6" stroke-dasharray="5,4" opacity=".25"/>
+
+<!-- GND bus -->
+<line x1="84" y1="90" x2="120" y2="90" class="w"/>
+<line x1="120" y1="90" x2="120" y2="660" class="w"/>
+<!-- ground symbol -->
+<line x1="110" y1="660" x2="130" y2="660" class="w" stroke-width="2.5"/>
+<line x1="113" y1="666" x2="127" y2="666" class="w" stroke-width="2"/>
+<line x1="116" y1="672" x2="124" y2="672" class="w" stroke-width="1.5"/>
+
+
+<!-- ========== MANUAL FORWARD ========== -->
+<circle cx="370" cy="190" r="3" class="dot"/>
+<line x1="370" y1="190" x2="420" y2="190" class="w"/>
+
+<!-- FWD btn -->
+<rect x="420" y="175" width="55" height="30" rx="3" class="cf"/>
+<line x1="432" y1="188" x2="439" y2="188" class="w" stroke-width="1.5"/>
+<line x1="457" y1="188" x2="464" y2="188" class="w" stroke-width="1.5"/>
+<line x1="439" y1="188" x2="452" y2="179" class="w" stroke-width="1.5"/>
+<text x="448" y="200" class="L" text-anchor="middle" font-size="8.5">FWD</text>
+<text x="490" y="188" class="Ls">NO mom.</text>
+
+<line x1="475" y1="190" x2="540" y2="190" class="w"/>
+
+<!-- SOL-A -->
+<rect x="540" y="176" width="80" height="28" rx="4" class="cs"/>
+<path d="M556,190 C558,182 561,182 564,190 C567,198 570,198 573,190 C576,182 579,182 582,190 C585,198 588,198 591,190 C594,182 597,182 600,190" class="w" stroke-width="1.6" fill="none"/>
+<text x="580" y="173" class="L" text-anchor="middle" font-size="9">SOL-A</text>
+<text x="635" y="192" class="Ls">EXTEND</text>
+
+<!-- diode -->
+<line x1="555" y1="175" x2="555" y2="168" class="w" stroke-width=".8"/>
+<line x1="605" y1="175" x2="605" y2="168" class="w" stroke-width=".8"/>
+<line x1="555" y1="168" x2="605" y2="168" class="w" stroke-width=".8"/>
+<polygon points="576,171 584,168 576,165" fill="#111" stroke="none"/>
+<line x1="584" y1="165" x2="584" y2="171" class="w" stroke-width="1"/>
+<text x="580" y="163" class="Ls" text-anchor="middle" fill="#777">D1</text>
+
+<line x1="620" y1="190" x2="720" y2="190" class="w"/>
+<line x1="720" y1="190" x2="720" y2="660" class="w"/>
+<circle cx="720" cy="660" r="3" class="dot"/>
+<line x1="720" y1="660" x2="120" y2="660" class="w"/>
+
+
+<!-- ========== MANUAL BACKWARD ========== -->
+<circle cx="370" cy="280" r="3" class="dot"/>
+<line x1="370" y1="280" x2="420" y2="280" class="w"/>
+
+<!-- BWD btn -->
+<rect x="420" y="265" width="55" height="30" rx="3" class="cf"/>
+<line x1="432" y1="278" x2="439" y2="278" class="w" stroke-width="1.5"/>
+<line x1="457" y1="278" x2="464" y2="278" class="w" stroke-width="1.5"/>
+<line x1="439" y1="278" x2="452" y2="269" class="w" stroke-width="1.5"/>
+<text x="448" y="290" class="L" text-anchor="middle" font-size="8.5">BWD</text>
+<text x="490" y="278" class="Ls">NO mom.</text>
+
+<line x1="475" y1="280" x2="540" y2="280" class="w"/>
+
+<!-- SOL-B -->
+<rect x="540" y="266" width="80" height="28" rx="4" class="cs"/>
+<path d="M556,280 C558,272 561,272 564,280 C567,288 570,288 573,280 C576,272 579,272 582,280 C585,288 588,288 591,280 C594,272 597,272 600,280" class="w" stroke-width="1.6" fill="none"/>
+<text x="580" y="263" class="L" text-anchor="middle" font-size="9">SOL-B</text>
+<text x="635" y="282" class="Ls">RETRACT</text>
+
+<!-- diode -->
+<line x1="555" y1="265" x2="555" y2="258" class="w" stroke-width=".8"/>
+<line x1="605" y1="265" x2="605" y2="258" class="w" stroke-width=".8"/>
+<line x1="555" y1="258" x2="605" y2="258" class="w" stroke-width=".8"/>
+<polygon points="576,261 584,258 576,255" fill="#111" stroke="none"/>
+<line x1="584" y1="255" x2="584" y2="261" class="w" stroke-width="1"/>
+<text x="580" y="253" class="Ls" text-anchor="middle" fill="#777">D2</text>
+
+<line x1="620" y1="280" x2="680" y2="280" class="w"/>
+<line x1="680" y1="280" x2="680" y2="660" class="w"/>
+<circle cx="680" cy="660" r="3" class="dot"/>
+
+
+<!-- ========== AUTO CYCLE: K1 COIL ========== -->
+<text x="190" y="370" class="L" font-size="9" fill="#444">K1 Coil (Cycle Latch)</text>
+
+<circle cx="370" cy="380" r="3" class="dot"/>
+<line x1="370" y1="380" x2="390" y2="380" class="w"/>
+<circle cx="390" cy="380" r="2.5" class="dot"/>
+
+<!-- CYCLE btn upper path -->
+<line x1="390" y1="380" x2="410" y2="380" class="w"/>
+<rect x="410" y="365" width="55" height="30" rx="3" class="cf" style="fill:#eef3e8"/>
+<line x1="422" y1="378" x2="429" y2="378" class="w" stroke-width="1.5"/>
+<line x1="447" y1="378" x2="454" y2="378" class="w" stroke-width="1.5"/>
+<line x1="429" y1="378" x2="442" y2="369" class="w" stroke-width="1.5"/>
+<text x="438" y="390" class="L" text-anchor="middle" font-size="8.5">CYCLE</text>
+<text x="478" y="378" class="Ls">NO mom.</text>
+<line x1="465" y1="380" x2="510" y2="380" class="w"/>
+
+<!-- K1 seal lower path -->
+<line x1="390" y1="380" x2="390" y2="420" class="w"/>
+<line x1="390" y1="420" x2="410" y2="420" class="w"/>
+<rect x="410" y="405" width="55" height="30" rx="3" class="cf"/>
+<line x1="422" y1="418" x2="429" y2="418" class="w" stroke-width="1.5"/>
+<line x1="447" y1="418" x2="454" y2="418" class="w" stroke-width="1.5"/>
+<line x1="429" y1="418" x2="442" y2="409" class="w" stroke-width="1.5"/>
+<text x="438" y="430" class="L" text-anchor="middle" font-size="8.5">K1-1</text>
+<text x="478" y="418" class="Ls">NO seal</text>
+<line x1="465" y1="420" x2="510" y2="420" class="w"/>
+<line x1="510" y1="420" x2="510" y2="380" class="w"/>
+<circle cx="510" cy="380" r="2.5" class="dot"/>
+
+<!-- LS2 NC -->
+<line x1="510" y1="380" x2="540" y2="380" class="w"/>
+<rect x="540" y="365" width="55" height="30" rx="3" class="cf"/>
+<line x1="552" y1="378" x2="559" y2="378" class="w" stroke-width="1.5"/>
+<line x1="577" y1="378" x2="584" y2="378" class="w" stroke-width="1.5"/>
+<line x1="559" y1="378" x2="577" y2="378" class="w" stroke-width="1.5"/>
+<line x1="567" y1="372" x2="567" y2="378" class="w" stroke-width="1.5"/>
+<text x="568" y="390" class="L" text-anchor="middle" font-size="8.5">LS2</text>
+<text x="608" y="376" class="Ls">NC — opens</text>
+<text x="608" y="385" class="Ls">at home</text>
+
+<line x1="595" y1="380" x2="660" y2="380" class="w"/>
+
+<!-- K1 Coil -->
+<rect x="660" y="363" width="72" height="34" rx="4" class="ck"/>
+<path d="M676,380 C678,372 681,372 684,380 C687,388 690,388 693,380 C696,372 699,372 702,380 C705,388 708,388 711,380 C714,372 717,372 720,380" class="w" stroke-width="1.6" fill="none"/>
+<text x="696" y="359" class="L" text-anchor="middle" font-size="9">K1 COIL</text>
+
+<!-- diode -->
+<line x1="672" y1="362" x2="672" y2="354" class="w" stroke-width=".8"/>
+<line x1="720" y1="362" x2="720" y2="354" class="w" stroke-width=".8"/>
+<line x1="672" y1="354" x2="720" y2="354" class="w" stroke-width=".8"/>
+<polygon points="692,357 700,354 692,351" fill="#111" stroke="none"/>
+<line x1="700" y1="351" x2="700" y2="357" class="w" stroke-width="1"/>
+<text x="696" y="349" class="Ls" text-anchor="middle" fill="#777">D3</text>
+
+<line x1="732" y1="380" x2="770" y2="380" class="w"/>
+<line x1="770" y1="380" x2="770" y2="660" class="w"/>
+<circle cx="770" cy="660" r="3" class="dot"/>
+
+<!-- mech link K1 → K1-1 -->
+<line x1="696" y1="397" x2="696" y2="440" class="wd"/>
+<line x1="696" y1="440" x2="438" y2="440" class="wd"/>
+<line x1="438" y1="440" x2="438" y2="435" class="wd"/>
+<text x="567" y="448" class="Ls" text-anchor="middle" fill="#777" font-size="7">mech. link to K1-1</text>
+
+
+<!-- ========== K2 COIL ========== -->
+<text x="190" y="478" class="L" font-size="9" fill="#444">K2 Coil (Direction)</text>
+
+<circle cx="370" cy="495" r="3" class="dot"/>
+<line x1="370" y1="495" x2="410" y2="495" class="w"/>
+
+<!-- K1-2 NO -->
+<rect x="410" y="480" width="55" height="30" rx="3" class="cf"/>
+<line x1="422" y1="493" x2="429" y2="493" class="w" stroke-width="1.5"/>
+<line x1="447" y1="493" x2="454" y2="493" class="w" stroke-width="1.5"/>
+<line x1="429" y1="493" x2="442" y2="484" class="w" stroke-width="1.5"/>
+<text x="438" y="505" class="L" text-anchor="middle" font-size="8.5">K1-2</text>
+<text x="478" y="493" class="Ls">NO</text>
+
+<line x1="465" y1="495" x2="540" y2="495" class="w"/>
+
+<!-- LS1 NC -->
+<rect x="540" y="480" width="55" height="30" rx="3" class="cf"/>
+<line x1="552" y1="493" x2="559" y2="493" class="w" stroke-width="1.5"/>
+<line x1="577" y1="493" x2="584" y2="493" class="w" stroke-width="1.5"/>
+<line x1="559" y1="493" x2="577" y2="493" class="w" stroke-width="1.5"/>
+<line x1="567" y1="487" x2="567" y2="493" class="w" stroke-width="1.5"/>
+<text x="568" y="505" class="L" text-anchor="middle" font-size="8.5">LS1</text>
+<text x="608" y="491" class="Ls">NC — opens</text>
+<text x="608" y="500" class="Ls">at full ext.</text>
+
+<line x1="595" y1="495" x2="660" y2="495" class="w"/>
+
+<!-- K2 Coil -->
+<rect x="660" y="478" width="72" height="34" rx="4" class="ck"/>
+<path d="M676,495 C678,487 681,487 684,495 C687,503 690,503 693,495 C696,487 699,487 702,495 C705,503 708,503 711,495 C714,487 717,487 720,495" class="w" stroke-width="1.6" fill="none"/>
+<text x="696" y="474" class="L" text-anchor="middle" font-size="9">K2 COIL</text>
+
+<!-- diode -->
+<line x1="672" y1="477" x2="672" y2="469" class="w" stroke-width=".8"/>
+<line x1="720" y1="477" x2="720" y2="469" class="w" stroke-width=".8"/>
+<line x1="672" y1="469" x2="720" y2="469" class="w" stroke-width=".8"/>
+<polygon points="692,472 700,469 692,466" fill="#111" stroke="none"/>
+<line x1="700" y1="466" x2="700" y2="472" class="w" stroke-width="1"/>
+<text x="696" y="464" class="Ls" text-anchor="middle" fill="#777">D4</text>
+
+<line x1="732" y1="495" x2="810" y2="495" class="w"/>
+<line x1="810" y1="495" x2="810" y2="660" class="w"/>
+<circle cx="810" cy="660" r="3" class="dot"/>
+
+<!-- mech link K1 → K1-2 -->
+<line x1="696" y1="397" x2="696" y2="440" class="wd"/>
+<line x1="438" y1="440" x2="438" y2="480" class="wd"/>
+<text x="438" y="475" class="Ls" text-anchor="middle" fill="#777" font-size="7">↑K1</text>
+
+
+<!-- ========== K2 SWITCHED OUTPUTS ========== -->
+<text x="190" y="558" class="L" font-size="9" fill="#444">K2 Switched Outputs</text>
+
+<circle cx="370" cy="580" r="3" class="dot"/>
+<line x1="370" y1="580" x2="430" y2="580" class="w"/>
+
+<!-- K2 DPDT changeover box -->
+<rect x="430" y="555" width="80" height="52" rx="4" class="cf" style="fill:#f3f3ee"/>
+<!-- COM -->
+<circle cx="445" cy="580" r="2.5" class="dot"/>
+<line x1="437" y1="580" x2="445" y2="580" class="w" stroke-width="1.5"/>
+<text x="445" y="573" class="Ls" font-size="6.5">COM</text>
+<!-- arm -->
+<line x1="445" y1="580" x2="494" y2="572" class="w" stroke-width="1.5"/>
+<!-- NO pin (top) -->
+<line x1="497" y1="568" x2="505" y2="568" class="w" stroke-width="1.5"/>
+<circle cx="497" cy="568" r="2" fill="none" stroke="#111" stroke-width="1"/>
+<text x="499" y="562" class="Ls" font-size="6.5">NO</text>
+<!-- NC pin (bottom) -->
+<line x1="497" y1="595" x2="505" y2="595" class="w" stroke-width="1.5"/>
+<circle cx="497" cy="595" r="2" fill="#111"/>
+<text x="499" y="605" class="Ls" font-size="6.5">NC</text>
+
+<text x="470" y="552" class="L" text-anchor="middle" font-size="8.5">K2-1</text>
+<text x="470" y="618" class="Ls" text-anchor="middle" font-size="7">DPDT changeover</text>
+
+<!-- NO → SOL-A -->
+<line x1="505" y1="568" x2="560" y2="568" class="w"/>
+<rect x="560" y="556" width="72" height="24" rx="4" class="cs"/>
+<path d="M574,568 C576,562 578,562 580,568 C582,574 584,574 586,568 C588,562 590,562 592,568 C594,574 596,574 598,568 C600,562 602,562 604,568 C606,574 608,574 610,568" class="w" stroke-width="1.4" fill="none"/>
+<text x="596" y="553" class="L" text-anchor="middle" font-size="8">SOL-A</text>
+<text x="648" y="570" class="Ls">EXTEND</text>
+
+<line x1="632" y1="568" x2="720" y2="568" class="w"/>
+<circle cx="720" cy="568" r="0"/>
+<line x1="720" y1="568" x2="720" y2="660" class="w"/>
+
+<!-- NC → SOL-B -->
+<line x1="505" y1="595" x2="560" y2="595" class="w"/>
+<rect x="560" y="583" width="72" height="24" rx="4" class="cs"/>
+<path d="M574,595 C576,589 578,589 580,595 C582,601 584,601 586,595 C588,589 590,589 592,595 C594,601 596,601 598,595 C600,589 602,589 604,595 C606,601 608,601 610,595" class="w" stroke-width="1.4" fill="none"/>
+<text x="596" y="580" class="L" text-anchor="middle" font-size="8">SOL-B</text>
+<text x="648" y="597" class="Ls">RETRACT</text>
+
+<line x1="632" y1="595" x2="680" y2="595" class="w"/>
+<line x1="680" y1="595" x2="680" y2="660" class="w"/>
+
+<!-- mech link K2 → K2-1 -->
+<line x1="696" y1="512" x2="696" y2="535" class="wd"/>
+<line x1="696" y1="535" x2="470" y2="535" class="wd"/>
+<line x1="470" y1="535" x2="470" y2="555" class="wd"/>
+<text x="583" y="533" class="Ls" text-anchor="middle" fill="#777" font-size="7">mech. link to K2-1</text>
+
+
+<!-- ========== K2 STATE NOTE ========== -->
+<rect x="155" y="555" width="195" height="50" rx="3" fill="#fafaf8" stroke="#bbb" stroke-width=".7"/>
+<text x="165" y="568" class="Ls" font-size="7.5" font-weight="600">K2 ENERGIZED → NO → SOL-A (extend)</text>
+<text x="165" y="580" class="Ls" font-size="7.5" font-weight="600">K2 DE-ENERG → NC → SOL-B (retract)</text>
+<text x="165" y="595" class="Ls" font-size="7" fill="#777">Only one solenoid powered at a time</text>
+
+
+<!-- ========== CONTACT SYMBOL KEY ========== -->
+<rect x="155" y="630" width="195" height="40" rx="3" fill="#fafaf8" stroke="#bbb" stroke-width=".7"/>
+<text x="165" y="643" class="Ls" font-size="7.5" font-weight="600">CONTACT SYMBOLS:</text>
+<!-- NO symbol -->
+<line x1="170" y1="656" x2="177" y2="656" class="w" stroke-width="1.2"/>
+<line x1="193" y1="656" x2="200" y2="656" class="w" stroke-width="1.2"/>
+<line x1="177" y1="656" x2="188" y2="649" class="w" stroke-width="1.2"/>
+<text x="208" y="659" class="Ls" font-size="7">= NO (normally open)</text>
+
+<!-- NC symbol -->
+<line x1="290" y1="656" x2="316" y2="656" class="w" stroke-width="1.2"/>
+<line x1="301" y1="650" x2="301" y2="656" class="w" stroke-width="1.2"/>
+<text x="324" y="659" class="Ls" font-size="7">= NC (normally closed)</text>
+
+</svg>
+</div>
+
+<div class="footer">
+  <span>PHOENIX NEST LLC · 1217 Unity Circle, Flatwoods KY 41139</span>
+  <span>Sheet 1 of 2 — Schematic</span>
+</div>
+
+</div><!-- end page 1 -->
+
+
+<!-- ============================================================
+     PAGE 2: BOM, SEQUENCE, NOTES
+     ============================================================ -->
+<div class="page">
+
+<div class="header">
+  <div class="left">
+    <strong>PHOENIX NEST LLC</strong>
+    Log Splitter — Auto Extend / Return
+  </div>
+  <div class="right">
+    <strong>DWG: PN-LS-002 Rev A</strong>
+    Sheet 2 — Reference
+  </div>
+</div>
+
+<div class="two-col">
+  <div>
+    <div class="info-box">
+      <h3>Bill of Materials</h3>
+      <div class="row"><span class="t">FUSE</span><span class="d">15A inline blade fuse</span></div>
+      <div class="row"><span class="t">E-STOP</span><span class="d">NC/NO pushbutton, twist-release (NC contact used in circuit; NO spare for indicator)</span></div>
+      <div class="row"><span class="t">FWD</span><span class="d">Momentary pushbutton, NO — waterproof rated</span></div>
+      <div class="row"><span class="t">BWD</span><span class="d">Momentary pushbutton, NO — waterproof rated</span></div>
+      <div class="row"><span class="t">CYCLE</span><span class="d">Momentary pushbutton, NO — waterproof rated</span></div>
+      <div class="row"><span class="t">LS1</span><span class="d">Limit switch, NC — mounted at full extend position</span></div>
+      <div class="row"><span class="t">LS2</span><span class="d">Limit switch, NC — mounted at full retract (home) position</span></div>
+      <div class="row"><span class="t">K1</span><span class="d">12VDC DPDT relay — cycle latch (uses 2× NO contacts: K1-1 seal, K1-2 feed)</span></div>
+      <div class="row"><span class="t">K2</span><span class="d">12VDC DPDT relay — direction control (uses 1× changeover: K2-1)</span></div>
+      <div class="row"><span class="t">SOL-A</span><span class="d">Hydraulic solenoid valve coil — extend port</span></div>
+      <div class="row"><span class="t">SOL-B</span><span class="d">Hydraulic solenoid valve coil — retract port</span></div>
+      <div class="row"><span class="t">D1–D4</span><span class="d">1N4007 flyback diodes — one across each coil (SOL-A, SOL-B, K1, K2)</span></div>
+    </div>
+
+    <div class="info-box">
+      <h3>DPDT Relay Pin Usage</h3>
+      <div class="row"><span class="t">K1</span><span class="d"><b>Pole 1 (K1-1):</b> NO contact used as seal — latches cycle after CYCLE button released</span></div>
+      <div class="row"><span class="t"></span><span class="d"><b>Pole 2 (K1-2):</b> NO contact feeds +12V to K2 coil circuit — only during auto cycle</span></div>
+      <div class="row"><span class="t">K2</span><span class="d"><b>Pole 1 (K2-1):</b> Changeover (COM/NO/NC) routes power to SOL-A (energized) or SOL-B (de-energized)</span></div>
+      <div class="row"><span class="t"></span><span class="d"><b>Pole 2:</b> Unused / spare</span></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="info-box">
+      <h3>Sequence of Operation</h3>
+      <div class="row"><span class="t">IDLE</span><span class="d">Cylinder at home. LS2 closed. K1 off, K2 off. No solenoids powered.</span></div>
+      <div class="row"><span class="t">FWD</span><span class="d">Hold FWD button → +12V goes direct to SOL-A → cylinder extends. Release to stop. Bypasses all relay logic.</span></div>
+      <div class="row"><span class="t">BWD</span><span class="d">Hold BWD button → +12V goes direct to SOL-B → cylinder retracts. Release to stop. Bypasses all relay logic.</span></div>
+      <div class="row"><span class="t">CYCLE</span><span class="d">Press CYCLE → K1 energizes → K1-1 seals (latches) → K1-2 closes, feeding K2 coil through LS1 → K2 energizes → K2-1 changeover flips to NO → SOL-A fires → cylinder extends.</span></div>
+      <div class="row"><span class="t">SPLIT</span><span class="d">Cylinder reaches full extend → LS1 opens → K2 drops → K2-1 changeover falls to NC → SOL-B fires → cylinder retracts automatically.</span></div>
+      <div class="row"><span class="t">HOME</span><span class="d">Cylinder reaches full retract → LS2 opens → K1 unlatches → K1-1 opens (seal broken) → K1-2 opens → all power removed. Cycle complete.</span></div>
+      <div class="row"><span class="t">E-STOP</span><span class="d">Press E-Stop at any time → NC contact opens → kills entire +12V bus → all circuits dead immediately. Twist to release.</span></div>
+    </div>
+
+    <div class="info-box">
+      <h3>Limit Switch Wiring Detail</h3>
+      <div class="row"><span class="t">LS1</span><span class="d">Mount where cylinder rod or wedge reaches full extension. NC contact wired in series with K2 coil. When cylinder hits LS1, contact opens, K2 drops, retract begins.</span></div>
+      <div class="row"><span class="t">LS2</span><span class="d">Mount where cylinder rod reaches full retract (home). NC contact wired in series with K1 coil. When cylinder reaches home, contact opens, K1 drops, cycle ends.</span></div>
+      <div class="row"><span class="t"></span><span class="d">Both switches should be NC type — fail-safe: broken wire = switch "open" = cycle stops.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="note-box">
+  <strong>WIRING NOTES:</strong><br>
+  • Use 12 AWG minimum for solenoid feeds and main +12V bus. 16 AWG acceptable for relay coil circuits and signal wiring.<br>
+  • Install 1N4007 flyback diode across EVERY inductive coil (K1, K2, SOL-A, SOL-B). Cathode band toward +12V side. Prevents relay contact arcing and pitting.<br>
+  • E-Stop NO contact is unused in this circuit — available for pilot light, horn, or shutdown indicator.<br>
+  • FWD and BWD buttons are wired direct-to-solenoid, completely independent of relay logic. If a relay fails, manual jog still works.<br>
+  • <strong>OPTIONAL INTERLOCK:</strong> Wire FWD and BWD buttons through a K1 NC contact to disable jog during auto cycle. Prevents operator from fighting the auto-return.<br>
+  • <strong>OPTIONAL SAFETY TIMER:</strong> Add a 12VDC time-delay relay (15s TON) in series with K1 coil. If LS1 never trips (jammed log, broken switch), timer kills the cycle automatically.<br>
+  • K2 changeover guarantees only one solenoid is ever powered during auto cycle — mechanical interlock built into the relay.
+</div>
+
+<div class="footer">
+  <span>PHOENIX NEST LLC · 1217 Unity Circle, Flatwoods KY 41139</span>
+  <span>Sheet 2 of 2 — BOM &amp; Reference</span>
+</div>
+
+</div><!-- end page 2 -->
+
+</body>
+</html>

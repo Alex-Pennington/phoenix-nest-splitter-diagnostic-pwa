@@ -1,0 +1,106 @@
+const INSTALL_PHASES = [
+  {
+    phase: "Phase 1: Mounting",
+    icon: "🔩",
+    steps: [
+      {step:"1.1", action:"Mount DIN rail on mounting plate. Secure plate to splitter frame with bolts and lock washers. Choose location protected from rain, hydraulic spray, and heat."},
+      {step:"1.2", action:"Mount K1 relay socket on DIN rail (left position)."},
+      {step:"1.3", action:"Mount K2 relay socket on DIN rail (right position)."},
+      {step:"1.4", action:"Mount DIN-rail terminal blocks between relay sockets. Need at least 3: one for +12V Bus (A), one for Ground bus, one for Junction B."},
+      {step:"1.5", action:"Mount inline fuse holder near battery connection point."},
+      {step:"1.6", action:"Mount operator panel box on splitter frame — accessible from operating position. Drill holes for E-STOP, FWD, BWD, CYCLE. E-STOP should be largest and most prominent."},
+      {step:"1.7", action:"Install all pushbuttons in panel box. E-STOP at top, CYCLE below, FWD and BWD at bottom."},
+      {step:"1.8", action:"Mount LS1 at full-extend position. Cylinder rod, wedge, or pusher plate should activate it at maximum stroke.",
+       test:"Manually push cylinder to full extend. Verify LS1 clicks."},
+      {step:"1.9", action:"Mount LS2 at full-retract (home) position. Cylinder rod should activate it when fully retracted.",
+       test:"Manually pull cylinder to full retract. Verify LS2 clicks."},
+    ]
+  },
+  {
+    phase: "Phase 2: Power Circuit",
+    icon: "⚡",
+    steps: [
+      {step:"2.1", action:"DISCONNECT BATTERY. Remove negative terminal cable first.", warn:true},
+      {step:"2.2", action:"Run W24 (BLACK 12AWG) from battery negative terminal to Ground bus terminal block. Do NOT connect to battery yet."},
+      {step:"2.3", action:"Run W25 (BLACK 12AWG) from Ground bus to clean bare metal on splitter frame. Star washer under bolt for good contact."},
+      {step:"2.4", action:"Run W01 (RED 12AWG) from battery positive terminal to fuse holder input. Do NOT connect to battery yet."},
+      {step:"2.5", action:"Run W02 (RED 12AWG) from fuse holder output to E-STOP NC terminal (C1)."},
+      {step:"2.6", action:"Run W03 (RED 12AWG) from E-STOP NC terminal (C2) to +12V Bus (A) terminal block."},
+      {step:"2.7", action:"Install 15A fuse in fuse holder."},
+      {step:"2.8", action:"Connect battery cables — negative first, then positive."},
+      {step:"2.9", action:"TEST: Measure voltage at +12V Bus (A) terminal block.",
+       test:"EXPECTED: ~12.5V at Bus (A) with E-STOP released.\nPress E-STOP — should drop to 0V.\nTwist-release E-STOP — voltage returns.\nIf no voltage: check fuse, battery connections, E-STOP wiring."},
+    ]
+  },
+  {
+    phase: "Phase 3: Manual Jog",
+    icon: "🕹️",
+    steps: [
+      {step:"3.1", action:"Run W04 (RED 14AWG) from +12V Bus (A) to FWD button terminal 1."},
+      {step:"3.2", action:"Run W05 (RED 14AWG) from FWD button terminal 2 to SOL-A coil (+)."},
+      {step:"3.3", action:"Run W06 (BLACK 14AWG) from SOL-A coil (−) to Ground bus."},
+      {step:"3.4", action:"Install flyback diode D1 (1N4007) across SOL-A coil terminals. CATHODE BAND TOWARD (+) TERMINAL.", warn:true},
+      {step:"3.5", action:"TEST: Start hydraulic power unit. Press and hold FWD.",
+       test:"EXPECTED: Cylinder extends while FWD held. Release — stops.\nIf nothing: check W04, W05, W06. Listen for SOL-A click.\nIf fuse blows: D1 diode is reversed."},
+      {step:"3.6", action:"Run W07 (RED 14AWG) from +12V Bus (A) to BWD button terminal 1."},
+      {step:"3.7", action:"Run W08 (RED 14AWG) from BWD button terminal 2 to SOL-B coil (+)."},
+      {step:"3.8", action:"Run W09 (BLACK 14AWG) from SOL-B coil (−) to Ground bus."},
+      {step:"3.9", action:"Install flyback diode D2 (1N4007) across SOL-B coil terminals. CATHODE BAND TOWARD (+) TERMINAL.", warn:true},
+      {step:"3.10", action:"TEST: Press and hold BWD.",
+       test:"EXPECTED: Cylinder retracts while BWD held. Release — stops.\nSame checks as 3.5 but for SOL-B side."},
+      {step:"3.11", action:"TEST: Use FWD and BWD to jog cylinder through full stroke.",
+       test:"EXPECTED: LS1 clicks at full extend, LS2 clicks at full retract.\nIf a switch doesn't click: adjust mounting position.\nCritical — auto cycle depends on both switches."},
+    ]
+  },
+  {
+    phase: "Phase 4: K1 Cycle Latch",
+    icon: "🔄",
+    steps: [
+      {step:"4.1", action:"Insert K1 relay into DIN rail socket. Note pin orientation — pin 1 usually marked on socket."},
+      {step:"4.2", action:"Install flyback diode D3 (1N4007) across K1 coil pins 2 and 7. CATHODE BAND TOWARD PIN 2 (+).", warn:true},
+      {step:"4.3", action:"Run W10 (RED 14AWG) from +12V Bus (A) to CYCLE button terminal 1."},
+      {step:"4.4", action:"Run W11 (RED 16AWG) from CYCLE button terminal 2 to Junction B terminal block."},
+      {step:"4.5", action:"Run W12 (RED 16AWG) from +12V Bus (A) to K1 pole 1 common (pin 1)."},
+      {step:"4.6", action:"Run W13 (RED 16AWG) from K1 pole 1 NO (pin 4) to Junction B terminal block."},
+      {step:"4.7", action:"Run W14 (RED 16AWG) from Junction B to LS2 terminal 1."},
+      {step:"4.8", action:"Run W15 (RED 16AWG) from LS2 terminal 2 to K1 coil (+) (pin 2)."},
+      {step:"4.9", action:"Run W16 (BLACK 16AWG) from K1 coil (−) (pin 7) to Ground bus."},
+      {step:"4.10", action:"Use BWD to jog cylinder to HOME position. LS2 must be in its normal (closed) state."},
+      {step:"4.11", action:"TEST: Press CYCLE momentarily and release.",
+       test:"EXPECTED: K1 clicks ON when pressed, STAYS ON after release (seal holding).\nIf K1 drops when you release: check W12 and W13 (seal path). Verify pin 1=COM, pin 4=NO."},
+      {step:"4.12", action:"TEST: With K1 latched, jog cylinder away from home with FWD, then back with BWD until LS2 clicks.",
+       test:"EXPECTED: When LS2 actuates, K1 UNLATCHES (clicks off).\nConfirms auto-stop at home works.\nIf K1 doesn't drop: check W14, W15 (LS2 path). Verify LS2 is NC type."},
+    ]
+  },
+  {
+    phase: "Phase 5: K2 Direction",
+    icon: "↔️",
+    steps: [
+      {step:"5.1", action:"Insert K2 relay into DIN rail socket."},
+      {step:"5.2", action:"Install flyback diode D4 (1N4007) across K2 coil pins 2 and 7. CATHODE BAND TOWARD PIN 2 (+).", warn:true},
+      {step:"5.3", action:"Run W17 (RED 14AWG) from +12V Bus (A) to K1 pole 2 common (pin 8)."},
+      {step:"5.4", action:"Run W18 (RED 16AWG) from K1 pole 2 NO (pin 5) to LS1 terminal 1."},
+      {step:"5.5", action:"Run W19 (RED 16AWG) from LS1 terminal 2 to K2 coil (+) (pin 2)."},
+      {step:"5.6", action:"Run W20 (BLACK 16AWG) from K2 coil (−) (pin 7) to Ground bus."},
+      {step:"5.7", action:"TEST: Jog cylinder to HOME with BWD. Press CYCLE to latch K1.",
+       test:"EXPECTED: Both K1 AND K2 click ON.\nK2 energizes because K1-2 closes (pin 8→5), feeding through LS1 (closed) to K2 coil.\nIf K1 latches but K2 doesn't: check W17, W18, W19, W20."},
+    ]
+  },
+  {
+    phase: "Phase 6: K2 Outputs & Full Test",
+    icon: "✅",
+    steps: [
+      {step:"6.1", action:"Run W21 (RED 14AWG) from +12V Bus (A) to K2 pole 1 common (pin 1)."},
+      {step:"6.2", action:"Run W22 (GREEN 14AWG) from K2 pole 1 NO (pin 4) to SOL-A coil (+)."},
+      {step:"6.3", action:"Run W23 (GREEN 14AWG) from K2 pole 1 NC (pin 3) to SOL-B coil (+)."},
+      {step:"6.4", action:"NOTE: SOL-A and SOL-B ground wires (W06, W09) already connected from Phase 3. Solenoids now have two power sources each — jog buttons and K2."},
+      {step:"6.5", action:"Jog cylinder to HOME with BWD. Place a piece of wood on the splitter bed."},
+      {step:"6.6", action:"FULL TEST: Press CYCLE once and release.",
+       test:"EXPECTED FULL SEQUENCE:\n1. K1 clicks ON (latches)\n2. K2 clicks ON (direction = extend)\n3. SOL-A fires — cylinder extends\n4. Cylinder hits wood, splits, continues to LS1\n5. LS1 opens — K2 clicks OFF\n6. SOL-B fires — cylinder retracts\n7. Cylinder reaches home — LS2 opens\n8. K1 clicks OFF — cycle complete, all quiet"},
+      {step:"6.7", action:"TEST E-STOP: Start another cycle. While extending, press E-STOP.",
+       test:"EXPECTED: Everything stops immediately.\nTwist-release E-STOP — system dead (K1 unlatched).\nJog home with BWD. New cycle should work normally."},
+      {step:"6.8", action:"TEST MANUAL OVERRIDE: During auto cycle, try FWD and BWD buttons.",
+       test:"EXPECTED: Jog buttons still work during auto cycle (they bypass relay logic).\nThis is your backup if a relay ever fails."},
+    ]
+  },
+];

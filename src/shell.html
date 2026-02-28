@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0c0f14">
+<link rel="manifest" href="manifest.json">
+<title>Log Splitter — Phoenix Nest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* __CSS_INJECT__ */
+</style>
+</head>
+<body>
+
+<div class="header">
+  <span class="logo">⚡</span>
+  <div>
+    <h1>LOG SPLITTER</h1>
+    <div class="sub">PN-LS-002 · Phoenix Nest LLC</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-tab="install"><span class="tab-icon">🔨</span>Install</button>
+  <button class="tab" data-tab="troubleshoot"><span class="tab-icon">🔧</span>Troubleshoot</button>
+  <button class="tab" data-tab="wiring"><span class="tab-icon">📋</span>Wiring</button>
+  <button class="tab" data-tab="tracer"><span class="tab-icon">⚡</span>Tracer</button>
+  <button class="tab" data-tab="simulator"><span class="tab-icon">▶</span>Simulator</button>
+</div>
+
+<div class="content">
+
+  <!-- INSTALL -->
+  <div class="panel active" id="install">
+    <div class="card-title">Installation Guide</div>
+    <p style="font-size:.75rem;color:var(--fg3);margin-bottom:.6rem">Wire and test one circuit at a time. Check off each step as you go.</p>
+    <div id="install-content"></div>
+  </div>
+
+  <!-- TROUBLESHOOT -->
+  <div class="panel" id="troubleshoot">
+    <div class="ts-breadcrumb" id="ts-breadcrumb"></div>
+    <div id="ts-flow"></div>
+  </div>
+
+  <!-- WIRING -->
+  <div class="panel" id="wiring">
+    <input class="search-box" id="wire-search" type="text" placeholder="Search wires, pins, components...">
+    <div class="section-title">Wire Schedule (W01–W25)</div>
+    <div style="overflow-x:auto">
+      <table class="tbl" id="wire-table">
+        <thead><tr><th>ID</th><th>Color</th><th>AWG</th><th>From → To</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="section-title" style="margin-top:1rem">K1 — Cycle Latch Relay</div>
+    <div id="k1-table" style="overflow-x:auto"></div>
+    <div class="section-title" style="margin-top:1rem">K2 — Direction Relay</div>
+    <div id="k2-table" style="overflow-x:auto"></div>
+    <div class="section-title" style="margin-top:1rem">Flyback Diodes</div>
+    <div class="card">
+      <div style="font-size:.78rem;color:var(--fg2);line-height:1.7">
+        <strong style="color:var(--red)">D1</strong> across SOL-A &nbsp;·&nbsp;
+        <strong style="color:var(--red)">D2</strong> across SOL-B &nbsp;·&nbsp;
+        <strong style="color:var(--red)">D3</strong> across K1 (pins 2/7) &nbsp;·&nbsp;
+        <strong style="color:var(--red)">D4</strong> across K2 (pins 2/7)<br>
+        <span style="color:var(--yellow)">⚠ Cathode band (stripe) toward (+) terminal on ALL diodes. Reversed = dead short = blown fuse.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRACER -->
+  <div class="panel" id="tracer">
+    <div class="card-title">Circuit Tracer</div>
+    <p style="font-size:.75rem;color:var(--fg3);margin-bottom:.6rem">Select a wire or circuit to trace the complete current path.</p>
+    <select class="tracer-select" id="trace-select">
+      <optgroup label="Circuits">
+        <option value="power">Power Bus</option>
+        <option value="fwd">Manual FWD Jog</option>
+        <option value="bwd">Manual BWD Jog</option>
+        <option value="k1">K1 Coil (Cycle Latch)</option>
+        <option value="k2">K2 Coil (Direction)</option>
+        <option value="k2_extend">K2 → SOL-A (Extend)</option>
+        <option value="k2_retract">K2 → SOL-B (Retract)</option>
+      </optgroup>
+      <optgroup label="Individual Wires" id="trace-wire-opts"></optgroup>
+    </select>
+    <div id="trace-result"></div>
+  </div>
+
+  <!-- SIMULATOR -->
+  <div class="panel" id="simulator">
+    <div class="card-title">Cycle Simulator</div>
+    <p style="font-size:.75rem;color:var(--fg3);margin-bottom:.6rem">Tap buttons to simulate. Hold FWD/BWD to jog.</p>
+    <div class="sim-controls">
+      <button class="sim-btn" id="sim-fwd">▶ FWD</button>
+      <button class="sim-btn" id="sim-bwd">◀ BWD</button>
+      <button class="sim-btn" id="sim-cycle">⟳ CYCLE</button>
+      <button class="sim-btn" id="sim-estop">⛔ E-STOP</button>
+    </div>
+    <div class="sim-status" id="sim-status"><span class="state">IDLE</span> — Ready</div>
+    <div class="sim-grid">
+      <div class="sim-item off" id="si-k1"><div class="sim-dot"></div><div><div class="sim-label">K1</div><div class="sim-sublabel">Cycle Latch</div></div></div>
+      <div class="sim-item off" id="si-k2"><div class="sim-dot"></div><div><div class="sim-label">K2</div><div class="sim-sublabel">Direction</div></div></div>
+      <div class="sim-item off" id="si-sola"><div class="sim-dot"></div><div><div class="sim-label">SOL-A</div><div class="sim-sublabel">Extend</div></div></div>
+      <div class="sim-item off" id="si-solb"><div class="sim-dot"></div><div><div class="sim-label">SOL-B</div><div class="sim-sublabel">Retract</div></div></div>
+      <div class="sim-item off" id="si-ls1"><div class="sim-dot"></div><div><div class="sim-label">LS1</div><div class="sim-sublabel">Full Extend</div></div></div>
+      <div class="sim-item off" id="si-ls2"><div class="sim-dot"></div><div><div class="sim-label">LS2</div><div class="sim-sublabel">Home</div></div></div>
+    </div>
+    <div class="sim-cylinder">
+      <div class="cyl-title">CYLINDER POSITION</div>
+      <div class="cyl-track"><div class="cyl-rod" id="cyl-rod"></div></div>
+      <div class="cyl-labels">
+        <span class="cyl-ls" id="cyl-ls2">LS2 HOME</span>
+        <span>stroke →</span>
+        <span class="cyl-ls" id="cyl-ls1">LS1 EXTEND</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* __JS_INJECT__ */
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  initNav();
+  initInstall();
+  initWiring();
+  buildRelayTable(document.getElementById('k1-table'), 'K1');
+  buildRelayTable(document.getElementById('k2-table'), 'K2');
+  initTracer();
+  initTroubleshoot();
+  initSimulator();
+
+  // Simulator button events (touch + mouse)
+  const fwd = document.getElementById('sim-fwd');
+  const bwd = document.getElementById('sim-bwd');
+  fwd.addEventListener('mousedown', () => simJog('fwd', true));
+  fwd.addEventListener('mouseup', () => simJog('fwd', false));
+  fwd.addEventListener('mouseleave', () => simJog('fwd', false));
+  fwd.addEventListener('touchstart', e => { e.preventDefault(); simJog('fwd', true); });
+  fwd.addEventListener('touchend', e => { e.preventDefault(); simJog('fwd', false); });
+  bwd.addEventListener('mousedown', () => simJog('bwd', true));
+  bwd.addEventListener('mouseup', () => simJog('bwd', false));
+  bwd.addEventListener('mouseleave', () => simJog('bwd', false));
+  bwd.addEventListener('touchstart', e => { e.preventDefault(); simJog('bwd', true); });
+  bwd.addEventListener('touchend', e => { e.preventDefault(); simJog('bwd', false); });
+  document.getElementById('sim-cycle').addEventListener('click', simCycle);
+  document.getElementById('sim-estop').addEventListener('click', simEstop);
+});
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
