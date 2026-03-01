@@ -181,7 +181,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--fg);display:flex;f
   <span class="logo">⚡</span>
   <div>
     <h1>LOG SPLITTER</h1>
-    <div class="sub">PN-LS-002 · Phoenix Nest LLC</div>
+    <div class="sub">PN-LS-002 Rev C · Phoenix Nest LLC</div>
   </div>
 </div>
 
@@ -197,8 +197,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--fg);display:flex;f
 
   <!-- INSTALL -->
   <div class="panel active" id="install">
-    <div class="card-title">Installation Guide</div>
-    <p style="font-size:.75rem;color:var(--fg3);margin-bottom:.6rem">Wire and test one circuit at a time. Check off each step as you go.</p>
+    <div class="card-title">Installation Guide — Rev C (3 Relay)</div>
+    <p style="font-size:.75rem;color:var(--fg3);margin-bottom:.6rem">Wire and test one circuit at a time. Check off each step.</p>
     <div id="install-content"></div>
   </div>
 
@@ -210,26 +210,36 @@ body{font-family:var(--font);background:var(--bg);color:var(--fg);display:flex;f
 
   <!-- WIRING -->
   <div class="panel" id="wiring">
-    <input class="search-box" id="wire-search" type="text" placeholder="Search wires, pins, components...">
-    <div class="section-title">Wire Schedule (W01–W25)</div>
+    <input class="search-box" id="wire-search" type="text" placeholder="Search wires, relays, components...">
+    <div class="section-title">Wire Schedule (W01–W30)</div>
     <div style="overflow-x:auto">
       <table class="tbl" id="wire-table">
         <thead><tr><th>ID</th><th>Color</th><th>AWG</th><th>From → To</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
-    <div class="section-title" style="margin-top:1rem">K1 — Cycle Latch Relay</div>
+    <div class="section-title" style="margin-top:1rem">K1 — Cycle Latch</div>
     <div id="k1-table" style="overflow-x:auto"></div>
-    <div class="section-title" style="margin-top:1rem">K2 — Direction Relay</div>
+    <div class="section-title" style="margin-top:1rem">K2 — Direction</div>
     <div id="k2-table" style="overflow-x:auto"></div>
+    <div class="section-title" style="margin-top:1rem">K3 — Extend Memory Latch</div>
+    <div id="k3-table" style="overflow-x:auto"></div>
     <div class="section-title" style="margin-top:1rem">Flyback Diodes</div>
     <div class="card">
       <div style="font-size:.78rem;color:var(--fg2);line-height:1.7">
-        <strong style="color:var(--red)">D1</strong> across SOL-A &nbsp;·&nbsp;
-        <strong style="color:var(--red)">D2</strong> across SOL-B &nbsp;·&nbsp;
-        <strong style="color:var(--red)">D3</strong> across K1 (pins 2/7) &nbsp;·&nbsp;
-        <strong style="color:var(--red)">D4</strong> across K2 (pins 2/7)<br>
-        <span style="color:var(--yellow)">⚠ Cathode band (stripe) toward (+) terminal on ALL diodes. Reversed = dead short = blown fuse.</span>
+        <strong style="color:var(--red)">D1</strong> across SOL-A ·
+        <strong style="color:var(--red)">D2</strong> across SOL-B ·
+        <strong style="color:var(--red)">D3</strong> across K1 coil ·
+        <strong style="color:var(--red)">D4</strong> across K2 coil ·
+        <strong style="color:var(--red)">D5</strong> across K3 coil<br>
+        <span style="color:var(--yellow)">⚠ Cathode band (stripe) toward (+) on ALL diodes.</span>
+      </div>
+    </div>
+    <div class="section-title" style="margin-top:1rem">Start Procedure</div>
+    <div class="card">
+      <div style="font-size:.78rem;color:var(--fg2);line-height:1.7">
+        <strong style="color:var(--accent)">To start a cycle:</strong> Tap FWD briefly to nudge cylinder off the retract limit, then press CYCLE.<br>
+        The retract limit NC pair prevents K1 from latching while the cylinder is at home. This is normal.
       </div>
     </div>
   </div>
@@ -237,14 +247,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--fg);display:flex;f
   <!-- TRACER -->
   <div class="panel" id="tracer">
     <div class="card-title">Circuit Tracer</div>
-    <p style="font-size:.75rem;color:var(--fg3);margin-bottom:.6rem">Select a wire or circuit to trace the complete current path.</p>
+    <p style="font-size:.75rem;color:var(--fg3);margin-bottom:.6rem">Select a wire or circuit to trace the full current path.</p>
     <select class="tracer-select" id="trace-select">
       <optgroup label="Circuits">
         <option value="power">Power Bus</option>
         <option value="fwd">Manual FWD Jog</option>
         <option value="bwd">Manual BWD Jog</option>
         <option value="k1">K1 Coil (Cycle Latch)</option>
-        <option value="k2">K2 Coil (Direction)</option>
+        <option value="nodex">Node X (K1 Pair 2 NO)</option>
+        <option value="k2">K2 Coil (through K3 NC lock)</option>
+        <option value="k3">K3 Coil (Extend Memory)</option>
         <option value="k2_extend">K2 → SOL-A (Extend)</option>
         <option value="k2_retract">K2 → SOL-B (Retract)</option>
       </optgroup>
@@ -255,8 +267,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--fg);display:flex;f
 
   <!-- SIMULATOR -->
   <div class="panel" id="simulator">
-    <div class="card-title">Cycle Simulator</div>
-    <p style="font-size:.75rem;color:var(--fg3);margin-bottom:.6rem">Tap buttons to simulate. Hold FWD/BWD to jog.</p>
+    <div class="card-title">Cycle Simulator — Rev C (3 Relay)</div>
+    <p style="font-size:.75rem;color:var(--fg3);margin-bottom:.6rem">Tap FWD to nudge off home, then CYCLE. Hold FWD/BWD to jog.</p>
     <div class="sim-controls">
       <button class="sim-btn" id="sim-fwd">▶ FWD</button>
       <button class="sim-btn" id="sim-bwd">◀ BWD</button>
@@ -267,18 +279,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--fg);display:flex;f
     <div class="sim-grid">
       <div class="sim-item off" id="si-k1"><div class="sim-dot"></div><div><div class="sim-label">K1</div><div class="sim-sublabel">Cycle Latch</div></div></div>
       <div class="sim-item off" id="si-k2"><div class="sim-dot"></div><div><div class="sim-label">K2</div><div class="sim-sublabel">Direction</div></div></div>
+      <div class="sim-item off" id="si-k3"><div class="sim-dot"></div><div><div class="sim-label">K3</div><div class="sim-sublabel">Extend Memory</div></div></div>
       <div class="sim-item off" id="si-sola"><div class="sim-dot"></div><div><div class="sim-label">SOL-A</div><div class="sim-sublabel">Extend</div></div></div>
       <div class="sim-item off" id="si-solb"><div class="sim-dot"></div><div><div class="sim-label">SOL-B</div><div class="sim-sublabel">Retract</div></div></div>
-      <div class="sim-item off" id="si-ls1"><div class="sim-dot"></div><div><div class="sim-label">LS1</div><div class="sim-sublabel">Full Extend</div></div></div>
-      <div class="sim-item off" id="si-ls2"><div class="sim-dot"></div><div><div class="sim-label">LS2</div><div class="sim-sublabel">Home</div></div></div>
+      <div class="sim-item off" id="si-extlim"><div class="sim-dot"></div><div><div class="sim-label">EXT LIM</div><div class="sim-sublabel">Extend Limit</div></div></div>
+      <div class="sim-item off" id="si-retlim"><div class="sim-dot"></div><div><div class="sim-label">RET LIM</div><div class="sim-sublabel">Retract Limit</div></div></div>
     </div>
     <div class="sim-cylinder">
       <div class="cyl-title">CYLINDER POSITION</div>
       <div class="cyl-track"><div class="cyl-rod" id="cyl-rod"></div></div>
       <div class="cyl-labels">
-        <span class="cyl-ls" id="cyl-ls2">LS2 HOME</span>
+        <span class="cyl-ls" id="cyl-retlim">RET HOME</span>
         <span>stroke →</span>
-        <span class="cyl-ls" id="cyl-ls1">LS1 EXTEND</span>
+        <span class="cyl-ls" id="cyl-extlim">EXT LIMIT</span>
       </div>
     </div>
   </div>
@@ -288,30 +301,35 @@ body{font-family:var(--font);background:var(--bg);color:var(--fg);display:flex;f
 <script>
 const WIRES = [
   {id:"W01",desc:"BATT(+) to Fuse",color:"RED",awg:"12",from:"Battery (+)",to:"Fuse input"},
-  {id:"W02",desc:"Fuse to E-Stop",color:"RED",awg:"12",from:"Fuse output",to:"E-Stop NC (C1)"},
-  {id:"W03",desc:"E-Stop to Bus A",color:"RED",awg:"12",from:"E-Stop NC (C2)",to:"+12V Bus (A)"},
-  {id:"W04",desc:"Bus A to FWD btn",color:"RED",awg:"14",from:"+12V Bus (A)",to:"FWD term 1"},
-  {id:"W05",desc:"FWD to SOL-A",color:"RED",awg:"14",from:"FWD term 2",to:"SOL-A (+)"},
-  {id:"W06",desc:"SOL-A to GND",color:"BLK",awg:"14",from:"SOL-A (−)",to:"Ground bus"},
-  {id:"W07",desc:"Bus A to BWD btn",color:"RED",awg:"14",from:"+12V Bus (A)",to:"BWD term 1"},
-  {id:"W08",desc:"BWD to SOL-B",color:"RED",awg:"14",from:"BWD term 2",to:"SOL-B (+)"},
-  {id:"W09",desc:"SOL-B to GND",color:"BLK",awg:"14",from:"SOL-B (−)",to:"Ground bus"},
-  {id:"W10",desc:"Bus A to CYCLE btn",color:"RED",awg:"14",from:"+12V Bus (A)",to:"CYCLE term 1"},
-  {id:"W11",desc:"CYCLE to Jct B",color:"RED",awg:"16",from:"CYCLE term 2",to:"Junction B"},
-  {id:"W12",desc:"Bus A to K1 pin 1",color:"RED",awg:"16",from:"+12V Bus (A)",to:"K1 pin 1 (COM)"},
-  {id:"W13",desc:"K1 pin 4 to Jct B",color:"RED",awg:"16",from:"K1 pin 4 (NO)",to:"Junction B"},
-  {id:"W14",desc:"Jct B to LS2",color:"RED",awg:"16",from:"Junction B",to:"LS2 term 1"},
-  {id:"W15",desc:"LS2 to K1 coil",color:"RED",awg:"16",from:"LS2 term 2",to:"K1 pin 2 (+)"},
-  {id:"W16",desc:"K1 coil to GND",color:"BLK",awg:"16",from:"K1 pin 7 (−)",to:"Ground bus"},
-  {id:"W17",desc:"Bus A to K1 pin 8",color:"RED",awg:"14",from:"+12V Bus (A)",to:"K1 pin 8 (COM)"},
-  {id:"W18",desc:"K1 pin 5 to LS1",color:"RED",awg:"16",from:"K1 pin 5 (NO)",to:"LS1 term 1"},
-  {id:"W19",desc:"LS1 to K2 coil",color:"RED",awg:"16",from:"LS1 term 2",to:"K2 pin 2 (+)"},
-  {id:"W20",desc:"K2 coil to GND",color:"BLK",awg:"16",from:"K2 pin 7 (−)",to:"Ground bus"},
-  {id:"W21",desc:"Bus A to K2 pin 1",color:"RED",awg:"14",from:"+12V Bus (A)",to:"K2 pin 1 (COM)"},
-  {id:"W22",desc:"K2 NO to SOL-A",color:"GRN",awg:"14",from:"K2 pin 4 (NO)",to:"SOL-A (+)"},
-  {id:"W23",desc:"K2 NC to SOL-B",color:"GRN",awg:"14",from:"K2 pin 3 (NC)",to:"SOL-B (+)"},
-  {id:"W24",desc:"BATT(−) to GND bus",color:"BLK",awg:"12",from:"Battery (−)",to:"Ground bus"},
-  {id:"W25",desc:"GND bus to Chassis",color:"BLK",awg:"12",from:"Ground bus",to:"Frame bolt"},
+  {id:"W02",desc:"Fuse to E-Stop",color:"RED",awg:"12",from:"Fuse output",to:"E-Stop NC pair"},
+  {id:"W03",desc:"E-Stop to Bus A",color:"RED",awg:"12",from:"E-Stop NC pair",to:"+12V Bus (A)"},
+  {id:"W04",desc:"Bus A to FWD btn",color:"RED",awg:"14",from:"+12V Bus (A)",to:"FWD NO pair"},
+  {id:"W05",desc:"FWD to SOL-A",color:"RED",awg:"14",from:"FWD NO pair",to:"SOL-A (+)"},
+  {id:"W06",desc:"SOL-A to GND",color:"BLK",awg:"14",from:"SOL-A (\u2212)",to:"Ground bus"},
+  {id:"W07",desc:"Bus A to BWD btn",color:"RED",awg:"14",from:"+12V Bus (A)",to:"BWD NO pair"},
+  {id:"W08",desc:"BWD to SOL-B",color:"RED",awg:"14",from:"BWD NO pair",to:"SOL-B (+)"},
+  {id:"W09",desc:"SOL-B to GND",color:"BLK",awg:"14",from:"SOL-B (\u2212)",to:"Ground bus"},
+  {id:"W10",desc:"Bus A to CYCLE btn",color:"RED",awg:"14",from:"+12V Bus (A)",to:"CYCLE NO pair"},
+  {id:"W11",desc:"CYCLE to Jct B",color:"RED",awg:"16",from:"CYCLE NO pair",to:"Junction B"},
+  {id:"W12",desc:"Bus A to K1 P1 COM",color:"RED",awg:"16",from:"+12V Bus (A)",to:"K1 Pair 1 COM"},
+  {id:"W13",desc:"K1 P1 NO to Jct B",color:"RED",awg:"16",from:"K1 Pair 1 NO",to:"Junction B (seal)"},
+  {id:"W14",desc:"Jct B to Retract Lim",color:"RED",awg:"16",from:"Junction B",to:"Retract Limit NC pair"},
+  {id:"W15",desc:"Retract Lim to K1 coil",color:"RED",awg:"16",from:"Retract Limit NC pair",to:"K1 Coil (+)"},
+  {id:"W16",desc:"K1 coil to GND",color:"BLK",awg:"16",from:"K1 Coil (\u2212)",to:"Ground bus"},
+  {id:"W17",desc:"Bus A to K1 P2 COM",color:"RED",awg:"14",from:"+12V Bus (A)",to:"K1 Pair 2 COM"},
+  {id:"W18",desc:"K1 P2 NO = Node X",color:"RED",awg:"14",from:"K1 Pair 2 NO",to:"Node X junction"},
+  {id:"W19",desc:"Node X to K3 P1 COM",color:"RED",awg:"14",from:"Node X",to:"K3 Pair 1 COM (jumpered to P2 COM)"},
+  {id:"W20",desc:"K3 P1 NC to K2 coil",color:"RED",awg:"16",from:"K3 Pair 1 NC",to:"K2 Coil (+)"},
+  {id:"W21",desc:"K2 coil to GND",color:"BLK",awg:"16",from:"K2 Coil (\u2212)",to:"Ground bus"},
+  {id:"W22",desc:"Node X to Extend Lim",color:"RED",awg:"16",from:"Node X",to:"Extend Limit NO pair"},
+  {id:"W23",desc:"Extend Lim to K3 coil",color:"RED",awg:"16",from:"Extend Limit NO pair",to:"K3 Coil (+)"},
+  {id:"W24",desc:"K3 P2 NO to K3 coil (seal)",color:"RED",awg:"16",from:"K3 Pair 2 NO",to:"K3 Coil (+)"},
+  {id:"W25",desc:"K3 coil to GND",color:"BLK",awg:"16",from:"K3 Coil (\u2212)",to:"Ground bus"},
+  {id:"W26",desc:"Node X to K2 P1 COM",color:"RED",awg:"14",from:"Node X",to:"K2 Pair 1 COM"},
+  {id:"W27",desc:"K2 P1 NO to SOL-A",color:"GRN",awg:"14",from:"K2 Pair 1 NO",to:"SOL-A (+)"},
+  {id:"W28",desc:"K2 P1 NC to SOL-B",color:"GRN",awg:"14",from:"K2 Pair 1 NC",to:"SOL-B (+)"},
+  {id:"W29",desc:"BATT(\u2212) to GND bus",color:"BLK",awg:"12",from:"Battery (\u2212)",to:"Ground bus"},
+  {id:"W30",desc:"GND bus to Chassis",color:"BLK",awg:"12",from:"Ground bus",to:"Frame bolt"},
 ];
 
 const CIRCUITS = {
@@ -323,54 +341,76 @@ const CIRCUITS = {
     ]
   },
   fwd: {
-    label: "Manual FWD Jog → SOL-A",
+    label: "Manual FWD Jog \u2192 SOL-A",
     path: [
-      {type:"power",name:"BUS (A)"},{wire:"W04"},{type:"switch",name:"FWD btn"},{wire:"W05"},
+      {type:"power",name:"BUS (A)"},{wire:"W04"},{type:"switch",name:"FWD btn NO"},{wire:"W05"},
       {type:"solenoid",name:"SOL-A"},{wire:"W06"},{type:"ground",name:"GND"}
     ]
   },
   bwd: {
-    label: "Manual BWD Jog → SOL-B",
+    label: "Manual BWD Jog \u2192 SOL-B",
     path: [
-      {type:"power",name:"BUS (A)"},{wire:"W07"},{type:"switch",name:"BWD btn"},{wire:"W08"},
+      {type:"power",name:"BUS (A)"},{wire:"W07"},{type:"switch",name:"BWD btn NO"},{wire:"W08"},
       {type:"solenoid",name:"SOL-B"},{wire:"W09"},{type:"ground",name:"GND"}
     ]
   },
   k1: {
     label: "K1 Coil (Cycle Latch)",
-    note: "Parallel paths: CYCLE btn (W10→W11) OR K1-1 seal (W12→pin1→pin4→W13) both reach Junction B",
+    note: "Two parallel paths to Junction B: CYCLE button OR K1 Pair 1 NO seal",
     path: [
-      {type:"power",name:"BUS (A)"},{wire:"W10"},{type:"switch",name:"CYCLE btn"},{wire:"W11"},
-      {type:"relay",name:"Jct B"},{wire:"W14"},{type:"switch",name:"LS2 NC"},{wire:"W15"},
+      {type:"power",name:"BUS (A)"},{wire:"W10"},{type:"switch",name:"CYCLE btn NO"},{wire:"W11"},
+      {type:"relay",name:"Jct B"},{wire:"W14"},{type:"switch",name:"Retract Lim NC"},{wire:"W15"},
       {type:"relay",name:"K1 COIL"},{wire:"W16"},{type:"ground",name:"GND"}
     ],
     alt: {
-      label: "Seal Path (parallel to CYCLE btn)",
+      label: "K1 Seal Path (parallel to CYCLE btn)",
       path: [
-        {type:"power",name:"BUS (A)"},{wire:"W12"},{type:"relay",name:"K1-1 COM→NO"},{wire:"W13"},
+        {type:"power",name:"BUS (A)"},{wire:"W12"},{type:"relay",name:"K1 P1 NO"},{wire:"W13"},
         {type:"relay",name:"Jct B"}
       ]
     }
   },
-  k2: {
-    label: "K2 Coil (Direction)",
+  nodex: {
+    label: "Node X (K1 Pair 2 NO \u2014 hot when cycle active)",
     path: [
-      {type:"power",name:"BUS (A)"},{wire:"W17"},{type:"relay",name:"K1-2 COM→NO"},{wire:"W18"},
-      {type:"switch",name:"LS1 NC"},{wire:"W19"},{type:"relay",name:"K2 COIL"},{wire:"W20"},
-      {type:"ground",name:"GND"}
+      {type:"power",name:"BUS (A)"},{wire:"W17"},{type:"relay",name:"K1 P2 NO"},{wire:"W18"},
+      {type:"power",name:"NODE X"}
     ]
   },
-  k2_extend: {
-    label: "K2 Output → SOL-A (K2 Energized)",
+  k2: {
+    label: "K2 Coil (Direction \u2014 through K3 NC lock)",
+    note: "K3 Pair 1 NC opens when K3 latches at extend, locking K2 OFF permanently",
     path: [
-      {type:"power",name:"BUS (A)"},{wire:"W21"},{type:"relay",name:"K2-1 COM→NO"},{wire:"W22"},
+      {type:"power",name:"NODE X"},{wire:"W19"},{type:"relay",name:"K3 P1 NC"},{wire:"W20"},
+      {type:"relay",name:"K2 COIL"},{wire:"W21"},{type:"ground",name:"GND"}
+    ]
+  },
+  k3: {
+    label: "K3 Coil (Extend Memory Latch)",
+    note: "Triggered by extend limit NO. Seal (K3 P2 NO) holds K3 on after limit releases.",
+    path: [
+      {type:"power",name:"NODE X"},{wire:"W22"},{type:"switch",name:"Extend Lim NO"},{wire:"W23"},
+      {type:"relay",name:"K3 COIL"},{wire:"W25"},{type:"ground",name:"GND"}
+    ],
+    alt: {
+      label: "K3 Seal Path (parallel to Extend Limit)",
+      path: [
+        {type:"power",name:"NODE X"},{wire:"W24 (via P2 COM)"},{type:"relay",name:"K3 P2 NO"},{wire:"W24"},
+        {type:"relay",name:"K3 COIL"}
+      ]
+    }
+  },
+  k2_extend: {
+    label: "K2 Output \u2192 SOL-A (K2 ON = Extend)",
+    path: [
+      {type:"power",name:"NODE X"},{wire:"W26"},{type:"relay",name:"K2 P1 NO"},{wire:"W27"},
       {type:"solenoid",name:"SOL-A"},{wire:"W06"},{type:"ground",name:"GND"}
     ]
   },
   k2_retract: {
-    label: "K2 Output → SOL-B (K2 De-energized)",
+    label: "K2 Output \u2192 SOL-B (K2 OFF = Retract)",
     path: [
-      {type:"power",name:"BUS (A)"},{wire:"W21"},{type:"relay",name:"K2-1 COM→NC"},{wire:"W23"},
+      {type:"power",name:"NODE X"},{wire:"W26"},{type:"relay",name:"K2 P1 NC"},{wire:"W28"},
       {type:"solenoid",name:"SOL-B"},{wire:"W09"},{type:"ground",name:"GND"}
     ]
   }
@@ -387,31 +427,30 @@ function findCircuitsForWire(wireId) {
 
 const TS_TREE = {
   start: {
-    q: "🔧 What's the problem?",
+    q: "\ud83d\udd27 What's the problem?",
     opts: [
-      {label: "Nothing works — completely dead", next: "dead1"},
+      {label: "Nothing works \u2014 completely dead", next: "dead1"},
       {label: "FWD jog doesn't work", next: "fwd1"},
       {label: "BWD jog doesn't work", next: "bwd1"},
       {label: "CYCLE button does nothing", next: "cyc1"},
       {label: "Extends but won't auto-retract", next: "noret1"},
       {label: "Retracts but won't stop at home", next: "nostop1"},
+      {label: "Cylinder chatters at extend limit", next: "chatter_ext"},
       {label: "Fuse keeps blowing", next: "fuse1"},
       {label: "Relay chatters or buzzes", next: "chatter1"},
       {label: "Solenoid hums, no cylinder movement", next: "hyd1"},
+      {label: "Won't start from home position", next: "home_start"},
     ]
   },
 
-  // === DEAD SYSTEM ===
   dead1: {
-    q: "⚡ Measure battery voltage with a multimeter.",
+    q: "\u26a1 Measure battery voltage.",
     opts: [
       {label: "Less than 11V", next: "dead_batt"},
-      {label: "12V+ at battery terminals", next: "dead2"},
+      {label: "12V+ at battery", next: "dead2"},
     ]
   },
-  dead_batt: {
-    answer: "Battery is dead or weak.|FIX: Charge or replace battery. Check for parasitic draw if it keeps dying."
-  },
+  dead_batt: { answer: "Battery is dead or weak.|FIX: Charge or replace battery." },
   dead2: {
     q: "Check the fuse. Is it blown?",
     opts: [
@@ -419,190 +458,156 @@ const TS_TREE = {
       {label: "Fuse is good", next: "dead3"},
     ]
   },
-  dead_fuse: {
-    answer: "Blown fuse = short circuit somewhere.|Do NOT just replace the fuse. Disconnect all loads from Bus (A). Reconnect one at a time to isolate the short.|Most common cause: reversed flyback diode (D1-D4). Check cathode band orientation on all four."
-  },
+  dead_fuse: { answer: "Blown fuse = short circuit.|Do NOT just replace. Disconnect loads one at a time to find the short.|CHECK: flyback diode orientation on all five coils (D1\u2013D5). Reversed = dead short." },
   dead3: {
-    q: "Is the E-Stop pressed in (locked)?",
+    q: "Is E-Stop pressed in?",
     opts: [
-      {label: "Yes — it's pressed in", next: "dead_estop"},
-      {label: "No — E-Stop is released", next: "dead4"},
+      {label: "Yes", next: "dead_estop"},
+      {label: "No \u2014 released", next: "dead4"},
     ]
   },
-  dead_estop: {
-    answer: "FIX: Twist the E-Stop to release it.|Power should restore to Bus (A). Verify with multimeter."
-  },
+  dead_estop: { answer: "FIX: Twist E-Stop to release. Power should return to Bus (A)." },
   dead4: {
-    q: "Measure voltage at +12V Bus (A) terminal block.",
+    q: "Measure voltage at +12V Bus (A).",
     opts: [
-      {label: "0V at Bus (A)", next: "dead_bus"},
-      {label: "~12V at Bus (A)", next: "dead_busok"},
+      {label: "0V at Bus A", next: "dead_bus"},
+      {label: "~12V at Bus A", next: "dead_busok"},
     ]
   },
-  dead_bus: {
-    answer: "Power not reaching Bus (A).|TRACE: BATT(+) → W01 → FUSE → W02 → E-STOP NC → W03 → Bus (A)|Check each wire and terminal for continuity. Look for corroded terminals, loose crimps, or broken wire."
-  },
-  dead_busok: {
-    answer: "Bus (A) has power — problem is downstream.|Go back and select a more specific symptom (FWD, CYCLE, etc.) to narrow it down."
-  },
+  dead_bus: { answer: "Power not reaching Bus A.|TRACE: BATT(+) \u2192 W01 \u2192 FUSE \u2192 W02 \u2192 E-STOP NC \u2192 W03 \u2192 Bus A|Check each connection for continuity." },
+  dead_busok: { answer: "Bus A has power \u2014 problem is downstream.|Go back and pick a more specific symptom." },
 
-  // === FWD JOG ===
   fwd1: {
-    q: "Hold FWD. Measure voltage at FWD button output terminal.",
+    q: "Hold FWD. Measure voltage at FWD button output.",
     opts: [
-      {label: "0V at FWD output", next: "fwd_nopower"},
-      {label: "~12V at FWD output", next: "fwd2"},
+      {label: "0V at output", next: "fwd_nop"},
+      {label: "~12V at output", next: "fwd2"},
     ]
   },
-  fwd_nopower: {
-    answer: "No power through FWD button.|CHECK: W04 from Bus (A) to FWD terminal 1. Verify button is NO type.|Measure at FWD terminal 1 — if 12V there but 0V at terminal 2 when pressed → button is bad."
-  },
+  fwd_nop: { answer: "No power through FWD.|CHECK: W04 from Bus A to FWD. Verify button works. Measure both sides." },
   fwd2: {
-    q: "Listen at SOL-A. Does it click when FWD is pressed?",
+    q: "Does SOL-A click when FWD is pressed?",
     opts: [
-      {label: "No click from SOL-A", next: "fwd_nosol"},
-      {label: "SOL-A clicks but cylinder doesn't move", next: "hyd1"},
+      {label: "No click", next: "fwd_nosol"},
+      {label: "Clicks but no movement", next: "hyd1"},
     ]
   },
-  fwd_nosol: {
-    answer: "Power not reaching SOL-A or coil is dead.|CHECK: W05 (FWD → SOL-A+) and W06 (SOL-A− → GND).|WARNING: If D1 is backwards it's a dead short — fuse should blow. Check diode orientation.|Test: swap SOL-A and SOL-B connections briefly to see if SOL-A coil itself is dead."
-  },
+  fwd_nosol: { answer: "Power not reaching SOL-A.|CHECK: W05 (FWD to SOL-A+) and W06 (SOL-A\u2212 to GND).|WARNING: If D1 reversed = dead short = blown fuse." },
 
-  // === BWD JOG ===
-  bwd1: {
-    answer: "Same diagnostic as FWD but for retract circuit.|CHECK: W07 (Bus A → BWD), W08 (BWD → SOL-B+), W09 (SOL-B− → GND), D2 orientation.|If BWD works but FWD doesn't (or vice versa), the problem is isolated to that specific button/solenoid/wire path."
-  },
+  bwd1: { answer: "Same diagnostic as FWD but for retract circuit.|CHECK: W07, W08, W09, and D2 orientation." },
 
-  // === CYCLE ===
   cyc1: {
-    q: "Is the cylinder at HOME (fully retracted)?",
+    q: "Is cylinder sitting on the retract limit?",
     opts: [
-      {label: "No — cylinder is out or mid-stroke", next: "cyc_nothome"},
-      {label: "Yes — fully retracted at home", next: "cyc2"},
+      {label: "Yes \u2014 fully retracted at home", next: "home_start"},
+      {label: "No \u2014 cylinder is mid-stroke or extended", next: "cyc2"},
     ]
-  },
-  cyc_nothome: {
-    answer: "FIX: Jog cylinder to HOME using BWD button.|LS2 must be closed (cylinder at home) for CYCLE to work. K1 cannot latch if LS2 is open."
   },
   cyc2: {
-    q: "Press CYCLE. Does K1 relay click?",
+    q: "Press CYCLE. Does K1 click?",
     opts: [
       {label: "K1 does NOT click", next: "cyc_nok1"},
-      {label: "K1 clicks ON", next: "cyc3"},
+      {label: "K1 clicks", next: "cyc3"},
     ]
   },
-  cyc_nok1: {
-    answer: "K1 coil not energizing.|TRACE while holding CYCLE: Bus(A) → W10 → CYCLE btn → W11 → Jct B → W14 → LS2 → W15 → K1 pin 2|Measure voltage at K1 pin 2 while holding CYCLE. If 12V there → check W16 (pin 7 → GND). If 0V → work backwards to find open connection."
-  },
+  cyc_nok1: { answer: "K1 not energizing.|TRACE while holding CYCLE: Bus A \u2192 W10 \u2192 CYCLE btn \u2192 W11 \u2192 Jct B \u2192 W14 \u2192 Retract Lim NC \u2192 W15 \u2192 K1 Coil|Find where voltage drops to 0." },
   cyc3: {
     q: "Release CYCLE. Does K1 stay latched?",
     opts: [
-      {label: "K1 drops when I release", next: "cyc_noseal"},
-      {label: "K1 stays ON — latched", next: "cyc4"},
+      {label: "K1 drops when released", next: "cyc_noseal"},
+      {label: "K1 stays on", next: "cyc4"},
     ]
   },
-  cyc_noseal: {
-    answer: "Seal contact (K1-1) not holding.|CHECK: W12 (Bus A → K1 pin 1 COM) and W13 (K1 pin 4 NO → Junction B).|Verify pin 1 = COM and pin 4 = NO on your specific relay. Use continuity test with K1 energized to confirm contact closes."
-  },
+  cyc_noseal: { answer: "Seal not working.|CHECK: W12 (Bus A \u2192 K1 Pair 1 COM) and W13 (K1 Pair 1 NO \u2192 Junction B)." },
   cyc4: {
-    q: "Does K2 click on when K1 latches?",
+    q: "Does K2 come on when K1 latches?",
     opts: [
-      {label: "K2 does NOT click", next: "cyc_nok2"},
-      {label: "K2 clicks ON — both relays on", next: "cyc5"},
+      {label: "K2 does NOT come on", next: "cyc_nok2"},
+      {label: "K2 comes on", next: "cyc5"},
     ]
   },
-  cyc_nok2: {
-    answer: "K2 coil not energizing.|TRACE: Bus(A) → W17 → K1 pin 8 (COM) → pin 5 (NO) → W18 → LS1 → W19 → K2 pin 2|K1-2 must be closed (K1 latched) and LS1 must be closed (not at full extend). Check W17, W18, W19, W20."
-  },
+  cyc_nok2: { answer: "K2 coil not getting power.|CHECK: Node X has voltage (K1 Pair 2 NO output).|CHECK: K3 is OFF and K3 Pair 1 NC is closed.|TRACE: Node X \u2192 W19 \u2192 K3 P1 COM \u2192 K3 P1 NC \u2192 W20 \u2192 K2 Coil" },
   cyc5: {
-    q: "Does the cylinder start extending?",
+    q: "Does the cylinder extend?",
     opts: [
       {label: "No movement", next: "cyc_nomove"},
-      {label: "Yes — extends fine", next: "cyc_ok"},
+      {label: "Yes \u2014 extends", next: "cyc_ok"},
     ]
   },
-  cyc_nomove: {
-    answer: "K2 output not reaching SOL-A.|CHECK: W21 (Bus A → K2 pin 1 COM), W22 (K2 pin 4 NO → SOL-A+).|Verify pin 4 = NO on your relay. When K2 energized, pin 1 should connect to pin 4.|Also confirm SOL-A ground W06 is connected."
-  },
-  cyc_ok: {
-    answer: "Cycle is starting correctly!|If the problem is with the return stroke, go back and select 'Extends but won't auto-retract'."
-  },
+  cyc_nomove: { answer: "K2 on but SOL-A not firing.|CHECK: W26 (Node X \u2192 K2 P1 COM) and W27 (K2 P1 NO \u2192 SOL-A+).|Verify K2 changeover is switching to NO when energized." },
+  cyc_ok: { answer: "Cycle starting correctly! If retract has issues, go back and pick that symptom." },
 
-  // === NO AUTO-RETRACT ===
   noret1: {
-    q: "At full extend, does LS1 actuate? (listen for click)",
+    q: "At full extend, does K3 pick up?",
     opts: [
-      {label: "LS1 does NOT click", next: "noret_ls1"},
-      {label: "LS1 clicks but K2 stays on", next: "noret_wiring"},
-      {label: "LS1 clicks, K2 drops, but SOL-B doesn't fire", next: "noret_solb"},
+      {label: "K3 does NOT pick up", next: "noret_nok3"},
+      {label: "K3 picks up but K2 stays on", next: "noret_k2stays"},
+      {label: "K3 picks up, K2 drops, but no retract", next: "noret_nosolb"},
     ]
   },
-  noret_ls1: {
-    answer: "LS1 not being activated at full extend.|FIX: Adjust LS1 mounting position. The cylinder rod/wedge must physically trigger LS1. Jog slowly with FWD and watch."
-  },
-  noret_wiring: {
-    answer: "LS1 may be wired NO instead of NC.|LS1 MUST be NC (closed at rest, opens when hit). If wired to the NO terminal of the switch, swap to NC terminal.|With switch not actuated, you should have continuity across the two wired terminals."
-  },
-  noret_solb: {
-    answer: "K2 dropped but SOL-B not firing on the NC path.|CHECK: W23 (K2 pin 3 NC → SOL-B+). When K2 de-energized, pin 1 (COM) connects to pin 3 (NC).|Verify pin 3 = NC on your relay. Also check SOL-B ground (W09)."
-  },
+  noret_nok3: { answer: "Extend limit not triggering K3.|CHECK: Extend limit NO pair \u2014 does it close when cylinder is at full extend?|CHECK: W22 (Node X \u2192 Extend Lim) and W23 (Extend Lim \u2192 K3 Coil+).|CHECK: W25 (K3 Coil\u2212 \u2192 GND)." },
+  noret_k2stays: { answer: "K3 NC contact not breaking K2 coil circuit.|CHECK: W19 (Node X \u2192 K3 P1 COM) and W20 (K3 P1 NC \u2192 K2 Coil+).|Verify K3 P1 NC actually opens when K3 energizes. Test with multimeter." },
+  noret_nosolb: { answer: "K2 dropped but SOL-B not firing.|CHECK: W28 (K2 P1 NC \u2192 SOL-B+). When K2 is off, P1 COM connects to P1 NC.|CHECK: SOL-B ground W09." },
 
-  // === NO STOP AT HOME ===
   nostop1: {
-    q: "When cylinder reaches home, does LS2 actuate?",
+    q: "At home, does K1 drop?",
     opts: [
-      {label: "LS2 does NOT click", next: "nostop_ls2"},
-      {label: "LS2 clicks but K1 stays latched", next: "nostop_wiring"},
+      {label: "K1 does NOT drop", next: "nostop_k1"},
+      {label: "K1 drops but cylinder keeps moving", next: "nostop_still"},
     ]
   },
-  nostop_ls2: {
-    answer: "LS2 not being activated.|FIX: Adjust LS2 mounting position. Jog slowly with BWD and verify LS2 triggers at correct home position."
-  },
-  nostop_wiring: {
-    answer: "LS2 may be wired NO instead of NC.|LS2 MUST be NC (closed at rest, opens when cylinder reaches home). If wired to the wrong terminal, K1 will never unlatch.|Check: with switch not actuated, you should have continuity across wired terminals."
-  },
+  nostop_k1: { answer: "Retract limit not breaking K1.|CHECK: Retract limit NC pair \u2014 does it open when cylinder reaches home?|Adjust switch mounting position if needed." },
+  nostop_still: { answer: "K1 dropped but solenoid still firing.|If K1 dropped, Node X should be dead, killing all relay outputs.|CHECK: Is BWD button stuck or held? BWD bypasses relays and feeds SOL-B directly." },
 
-  // === FUSE ===
-  fuse1: {
-    answer: "Repeated blown fuse = short circuit.|Do NOT keep replacing fuse without finding cause.|Disconnect all loads from Bus (A). Reconnect one at a time:|1. FWD jog (W04/W05/W06) — check D1|2. BWD jog (W07/W08/W09) — check D2|3. K1 circuit — check D3|4. K2 circuit — check D4|5. K2 outputs (W21/W22/W23)|Most common cause: reversed flyback diode. Backwards diode = dead short across coil."
-  },
+  chatter_ext: { answer: "K2 bouncing at extend limit = K3 not latching properly.|CHECK: K3 seal \u2014 W24 (K3 P2 NO \u2192 K3 Coil+). This holds K3 on after extend limit releases.|CHECK: K3 P2 COM is jumpered to K3 P1 COM (both fed from Node X).|If seal wire is missing, K3 drops when cylinder moves off extend limit, K2 comes back, and it bounces." },
 
-  // === CHATTER ===
-  chatter1: {
-    answer: "Relay chatter = insufficient coil voltage.|CHECK: Battery voltage under load (engine running) — should be >12V.|Check for voltage drop at relay coil pins — should be >10V.|Look for corroded terminals and loose connections on ground circuit (W24, W25).|Clean frame ground bolt (bare metal, star washer)."
-  },
+  fuse1: { answer: "Repeated blown fuse = short circuit.|Disconnect all loads from Bus A. Reconnect one at a time.|CHECK: flyback diodes D1\u2013D5. Reversed diode = dead short across coil when energized.|Most common cause by far." },
 
-  // === HYDRAULIC ===
-  hyd1: {
-    answer: "Solenoid clicking but no cylinder movement = hydraulic issue, not electrical.|CHECK:|• Hydraulic fluid level|• Engine/PTO RPM sufficient|• Air in hydraulic lines (bleed if needed)|• Relief valve setting|• Hydraulic hoses for kinks or damage|The electrical system is working correctly if you hear the solenoid click."
-  },
+  chatter1: { answer: "Relay chatter = low coil voltage.|CHECK: Battery voltage under load (>12V).|CHECK: Ground connections \u2014 W29 (BATT\u2212 to GND bus), W30 (GND bus to frame).|Clean frame ground bolt, use star washer." },
+
+  hyd1: { answer: "Solenoid clicking but no movement = hydraulic issue.|CHECK: Fluid level, engine/PTO RPM, air in lines, relief valve, hose condition.|Electrical system is working if you hear the click." },
+
+  home_start: { answer: "Normal behavior. Retract limit NC pair is open when cylinder is at home, which prevents K1 from latching.|FIX: Tap FWD briefly to nudge cylinder off the retract limit, then press CYCLE. This is the designed start procedure \u2014 FWD then CYCLE." },
 };
 
 const RELAY_PINS = {
   K1: {
-    label: "K1 — Cycle Latch Relay",
+    label: "K1 \u2014 Cycle Latch Relay",
     pins: [
-      {pin:1, func:"Pole 1 COM", wire:"W12", conn:"+12V Bus (A)"},
-      {pin:2, func:"Coil (+)",   wire:"W15", conn:"From LS2"},
-      {pin:3, func:"Pole 1 NC",  wire:"—",   conn:"Not used"},
-      {pin:4, func:"Pole 1 NO",  wire:"W13", conn:"Junction B (seal)"},
-      {pin:5, func:"Pole 2 NO",  wire:"W18", conn:"To LS1"},
-      {pin:6, func:"Pole 2 NC",  wire:"—",   conn:"Not used (jog interlock)"},
-      {pin:7, func:"Coil (−)",   wire:"W16", conn:"Ground bus"},
-      {pin:8, func:"Pole 2 COM", wire:"W17", conn:"+12V Bus (A)"},
+      {pin:"Coil (+)", wire:"W15", conn:"From Retract Limit NC pair"},
+      {pin:"Coil (\u2212)", wire:"W16", conn:"Ground bus"},
+      {pin:"Pair 1 COM", wire:"W12", conn:"+12V Bus (A)"},
+      {pin:"Pair 1 NO", wire:"W13", conn:"Junction B (seal)"},
+      {pin:"Pair 1 NC", wire:"\u2014", conn:"Not used"},
+      {pin:"Pair 2 COM", wire:"W17", conn:"+12V Bus (A)"},
+      {pin:"Pair 2 NO", wire:"W18", conn:"Node X (feeds K2 output, K2 coil via K3, K3 coil via extend lim)"},
+      {pin:"Pair 2 NC", wire:"\u2014", conn:"Not used"},
     ]
   },
   K2: {
-    label: "K2 — Direction Relay",
+    label: "K2 \u2014 Direction Relay",
     pins: [
-      {pin:1, func:"Pole 1 COM", wire:"W21", conn:"+12V Bus (A)"},
-      {pin:2, func:"Coil (+)",   wire:"W19", conn:"From LS1"},
-      {pin:3, func:"Pole 1 NC",  wire:"W23", conn:"SOL-B (+)"},
-      {pin:4, func:"Pole 1 NO",  wire:"W22", conn:"SOL-A (+)"},
-      {pin:5, func:"Pole 2 NO",  wire:"—",   conn:"Not used"},
-      {pin:6, func:"Pole 2 NC",  wire:"—",   conn:"Not used"},
-      {pin:7, func:"Coil (−)",   wire:"W20", conn:"Ground bus"},
-      {pin:8, func:"Pole 2 COM", wire:"—",   conn:"Not used"},
+      {pin:"Coil (+)", wire:"W20", conn:"From K3 Pair 1 NC (locked off when K3 latches)"},
+      {pin:"Coil (\u2212)", wire:"W21", conn:"Ground bus"},
+      {pin:"Pair 1 COM", wire:"W26", conn:"Node X (solenoid output power)"},
+      {pin:"Pair 1 NO", wire:"W27", conn:"SOL-A (+) \u2014 EXTEND"},
+      {pin:"Pair 1 NC", wire:"W28", conn:"SOL-B (+) \u2014 RETRACT"},
+      {pin:"Pair 2 COM", wire:"\u2014", conn:"Not used"},
+      {pin:"Pair 2 NO", wire:"\u2014", conn:"Not used"},
+      {pin:"Pair 2 NC", wire:"\u2014", conn:"Not used"},
+    ]
+  },
+  K3: {
+    label: "K3 \u2014 Extend Memory Latch",
+    pins: [
+      {pin:"Coil (+)", wire:"W23 + W24", conn:"From Extend Limit NO pair AND K3 Pair 2 NO (seal) \u2014 two wires on same terminal"},
+      {pin:"Coil (\u2212)", wire:"W25", conn:"Ground bus"},
+      {pin:"Pair 1 COM", wire:"W19", conn:"Node X (jumpered to Pair 2 COM)"},
+      {pin:"Pair 1 NO", wire:"\u2014", conn:"Not used"},
+      {pin:"Pair 1 NC", wire:"W20", conn:"K2 Coil (+) \u2014 THE LOCK"},
+      {pin:"Pair 2 COM", wire:"jumper", conn:"Jumpered to Pair 1 COM"},
+      {pin:"Pair 2 NO", wire:"W24", conn:"K3 Coil (+) \u2014 THE SEAL"},
+      {pin:"Pair 2 NC", wire:"\u2014", conn:"Not used"},
     ]
   }
 };
@@ -610,106 +615,110 @@ const RELAY_PINS = {
 const INSTALL_PHASES = [
   {
     phase: "Phase 1: Mounting",
-    icon: "🔩",
+    icon: "\ud83d\udd29",
     steps: [
-      {step:"1.1", action:"Mount DIN rail on mounting plate. Secure plate to splitter frame with bolts and lock washers. Choose location protected from rain, hydraulic spray, and heat."},
-      {step:"1.2", action:"Mount K1 relay socket on DIN rail (left position)."},
-      {step:"1.3", action:"Mount K2 relay socket on DIN rail (right position)."},
-      {step:"1.4", action:"Mount DIN-rail terminal blocks between relay sockets. Need at least 3: one for +12V Bus (A), one for Ground bus, one for Junction B."},
-      {step:"1.5", action:"Mount inline fuse holder near battery connection point."},
-      {step:"1.6", action:"Mount operator panel box on splitter frame — accessible from operating position. Drill holes for E-STOP, FWD, BWD, CYCLE. E-STOP should be largest and most prominent."},
-      {step:"1.7", action:"Install all pushbuttons in panel box. E-STOP at top, CYCLE below, FWD and BWD at bottom."},
-      {step:"1.8", action:"Mount LS1 at full-extend position. Cylinder rod, wedge, or pusher plate should activate it at maximum stroke.",
-       test:"Manually push cylinder to full extend. Verify LS1 clicks."},
-      {step:"1.9", action:"Mount LS2 at full-retract (home) position. Cylinder rod should activate it when fully retracted.",
-       test:"Manually pull cylinder to full retract. Verify LS2 clicks."},
+      {step:"1.1", action:"Mount DIN rail on mounting plate. Secure to splitter frame. Protected from rain, hydraulic spray, heat."},
+      {step:"1.2", action:"Mount K1, K2, K3 relay sockets on DIN rail. K1 left, K2 center, K3 right."},
+      {step:"1.3", action:"Mount DIN-rail terminal blocks. Need: +12V Bus (A), Ground bus, Junction B, Node X."},
+      {step:"1.4", action:"Mount inline fuse holder near battery."},
+      {step:"1.5", action:"Mount operator panel box. Drill for E-STOP, FWD, BWD, CYCLE. E-STOP largest, top position."},
+      {step:"1.6", action:"Install pushbuttons. E-STOP top, CYCLE below, FWD and BWD bottom."},
+      {step:"1.7", action:"Mount extend limit switch at full-extend position.",
+       test:"Push cylinder to full extend. Verify NO pair closes (continuity test)."},
+      {step:"1.8", action:"Mount retract limit switch at full-retract (home) position.",
+       test:"Pull cylinder to full retract. Verify NC pair opens (continuity breaks)."},
     ]
   },
   {
     phase: "Phase 2: Power Circuit",
-    icon: "⚡",
+    icon: "\u26a1",
     steps: [
-      {step:"2.1", action:"DISCONNECT BATTERY. Remove negative terminal cable first.", warn:true},
-      {step:"2.2", action:"Run W24 (BLACK 12AWG) from battery negative terminal to Ground bus terminal block. Do NOT connect to battery yet."},
-      {step:"2.3", action:"Run W25 (BLACK 12AWG) from Ground bus to clean bare metal on splitter frame. Star washer under bolt for good contact."},
-      {step:"2.4", action:"Run W01 (RED 12AWG) from battery positive terminal to fuse holder input. Do NOT connect to battery yet."},
-      {step:"2.5", action:"Run W02 (RED 12AWG) from fuse holder output to E-STOP NC terminal (C1)."},
-      {step:"2.6", action:"Run W03 (RED 12AWG) from E-STOP NC terminal (C2) to +12V Bus (A) terminal block."},
-      {step:"2.7", action:"Install 15A fuse in fuse holder."},
-      {step:"2.8", action:"Connect battery cables — negative first, then positive."},
-      {step:"2.9", action:"TEST: Measure voltage at +12V Bus (A) terminal block.",
-       test:"EXPECTED: ~12.5V at Bus (A) with E-STOP released.\nPress E-STOP — should drop to 0V.\nTwist-release E-STOP — voltage returns.\nIf no voltage: check fuse, battery connections, E-STOP wiring."},
+      {step:"2.1", action:"DISCONNECT BATTERY. Negative terminal first.", warn:true},
+      {step:"2.2", action:"W29: BLACK 12AWG \u2014 Battery (\u2212) to Ground bus."},
+      {step:"2.3", action:"W30: BLACK 12AWG \u2014 Ground bus to frame bolt (clean metal, star washer)."},
+      {step:"2.4", action:"W01: RED 12AWG \u2014 Battery (+) to fuse holder input."},
+      {step:"2.5", action:"W02: RED 12AWG \u2014 Fuse output to E-STOP NC pair."},
+      {step:"2.6", action:"W03: RED 12AWG \u2014 E-STOP NC pair to +12V Bus (A)."},
+      {step:"2.7", action:"Install 15A fuse. Reconnect battery (negative first, then positive)."},
+      {step:"2.8", action:"TEST: Measure voltage at Bus (A).",
+       test:"EXPECTED: ~12.5V with E-STOP released.\nPress E-STOP \u2014 drops to 0V.\nRelease \u2014 voltage returns."},
     ]
   },
   {
     phase: "Phase 3: Manual Jog",
-    icon: "🕹️",
+    icon: "\ud83d\udd79\ufe0f",
     steps: [
-      {step:"3.1", action:"Run W04 (RED 14AWG) from +12V Bus (A) to FWD button terminal 1."},
-      {step:"3.2", action:"Run W05 (RED 14AWG) from FWD button terminal 2 to SOL-A coil (+)."},
-      {step:"3.3", action:"Run W06 (BLACK 14AWG) from SOL-A coil (−) to Ground bus."},
-      {step:"3.4", action:"Install flyback diode D1 (1N4007) across SOL-A coil terminals. CATHODE BAND TOWARD (+) TERMINAL.", warn:true},
-      {step:"3.5", action:"TEST: Start hydraulic power unit. Press and hold FWD.",
-       test:"EXPECTED: Cylinder extends while FWD held. Release — stops.\nIf nothing: check W04, W05, W06. Listen for SOL-A click.\nIf fuse blows: D1 diode is reversed."},
-      {step:"3.6", action:"Run W07 (RED 14AWG) from +12V Bus (A) to BWD button terminal 1."},
-      {step:"3.7", action:"Run W08 (RED 14AWG) from BWD button terminal 2 to SOL-B coil (+)."},
-      {step:"3.8", action:"Run W09 (BLACK 14AWG) from SOL-B coil (−) to Ground bus."},
-      {step:"3.9", action:"Install flyback diode D2 (1N4007) across SOL-B coil terminals. CATHODE BAND TOWARD (+) TERMINAL.", warn:true},
-      {step:"3.10", action:"TEST: Press and hold BWD.",
-       test:"EXPECTED: Cylinder retracts while BWD held. Release — stops.\nSame checks as 3.5 but for SOL-B side."},
-      {step:"3.11", action:"TEST: Use FWD and BWD to jog cylinder through full stroke.",
-       test:"EXPECTED: LS1 clicks at full extend, LS2 clicks at full retract.\nIf a switch doesn't click: adjust mounting position.\nCritical — auto cycle depends on both switches."},
+      {step:"3.1", action:"W04: RED 14AWG \u2014 Bus (A) to FWD NO pair."},
+      {step:"3.2", action:"W05: RED 14AWG \u2014 FWD NO pair to SOL-A (+)."},
+      {step:"3.3", action:"W06: BLACK 14AWG \u2014 SOL-A (\u2212) to Ground bus."},
+      {step:"3.4", action:"Diode D1 across SOL-A. Cathode stripe toward (+).", warn:true},
+      {step:"3.5", action:"TEST: Start hydraulics. Hold FWD.",
+       test:"EXPECTED: Cylinder extends while held. Stops on release."},
+      {step:"3.6", action:"W07: RED 14AWG \u2014 Bus (A) to BWD NO pair."},
+      {step:"3.7", action:"W08: RED 14AWG \u2014 BWD NO pair to SOL-B (+)."},
+      {step:"3.8", action:"W09: BLACK 14AWG \u2014 SOL-B (\u2212) to Ground bus."},
+      {step:"3.9", action:"Diode D2 across SOL-B. Cathode stripe toward (+).", warn:true},
+      {step:"3.10", action:"TEST: Hold BWD.",
+       test:"EXPECTED: Cylinder retracts while held. Stops on release."},
+      {step:"3.11", action:"TEST: Jog full stroke both ways.",
+       test:"EXPECTED: Extend limit NO pair closes at full extend.\nRetract limit NC pair opens at full retract."},
     ]
   },
   {
     phase: "Phase 4: K1 Cycle Latch",
-    icon: "🔄",
+    icon: "\ud83d\udd04",
     steps: [
-      {step:"4.1", action:"Insert K1 relay into DIN rail socket. Note pin orientation — pin 1 usually marked on socket."},
-      {step:"4.2", action:"Install flyback diode D3 (1N4007) across K1 coil pins 2 and 7. CATHODE BAND TOWARD PIN 2 (+).", warn:true},
-      {step:"4.3", action:"Run W10 (RED 14AWG) from +12V Bus (A) to CYCLE button terminal 1."},
-      {step:"4.4", action:"Run W11 (RED 16AWG) from CYCLE button terminal 2 to Junction B terminal block."},
-      {step:"4.5", action:"Run W12 (RED 16AWG) from +12V Bus (A) to K1 pole 1 common (pin 1)."},
-      {step:"4.6", action:"Run W13 (RED 16AWG) from K1 pole 1 NO (pin 4) to Junction B terminal block."},
-      {step:"4.7", action:"Run W14 (RED 16AWG) from Junction B to LS2 terminal 1."},
-      {step:"4.8", action:"Run W15 (RED 16AWG) from LS2 terminal 2 to K1 coil (+) (pin 2)."},
-      {step:"4.9", action:"Run W16 (BLACK 16AWG) from K1 coil (−) (pin 7) to Ground bus."},
-      {step:"4.10", action:"Use BWD to jog cylinder to HOME position. LS2 must be in its normal (closed) state."},
-      {step:"4.11", action:"TEST: Press CYCLE momentarily and release.",
-       test:"EXPECTED: K1 clicks ON when pressed, STAYS ON after release (seal holding).\nIf K1 drops when you release: check W12 and W13 (seal path). Verify pin 1=COM, pin 4=NO."},
-      {step:"4.12", action:"TEST: With K1 latched, jog cylinder away from home with FWD, then back with BWD until LS2 clicks.",
-       test:"EXPECTED: When LS2 actuates, K1 UNLATCHES (clicks off).\nConfirms auto-stop at home works.\nIf K1 doesn't drop: check W14, W15 (LS2 path). Verify LS2 is NC type."},
+      {step:"4.1", action:"Insert K1 relay. Diode D3 across coil. Cathode toward (+).", warn:true},
+      {step:"4.2", action:"W10: RED 14AWG \u2014 Bus (A) to CYCLE NO pair."},
+      {step:"4.3", action:"W11: RED 16AWG \u2014 CYCLE NO pair to Junction B."},
+      {step:"4.4", action:"W12: RED 16AWG \u2014 Bus (A) to K1 Pair 1 COM."},
+      {step:"4.5", action:"W13: RED 16AWG \u2014 K1 Pair 1 NO to Junction B."},
+      {step:"4.6", action:"W14: RED 16AWG \u2014 Junction B to Retract Limit NC pair."},
+      {step:"4.7", action:"W15: RED 16AWG \u2014 Retract Limit NC pair to K1 Coil (+)."},
+      {step:"4.8", action:"W16: BLACK 16AWG \u2014 K1 Coil (\u2212) to Ground bus."},
+      {step:"4.9", action:"Jog cylinder off the retract limit with FWD."},
+      {step:"4.10", action:"TEST: Press CYCLE and release.",
+       test:"EXPECTED: K1 picks up and STAYS latched after release.\nIf it drops: check W12 and W13 (seal path)."},
+      {step:"4.11", action:"TEST: Jog cylinder to home with BWD until retract limit trips.",
+       test:"EXPECTED: K1 drops when retract limit opens.\nConfirms cycle-end works."},
     ]
   },
   {
-    phase: "Phase 5: K2 Direction",
-    icon: "↔️",
+    phase: "Phase 5: Node X + K3 Extend Memory",
+    icon: "\ud83e\udde0",
     steps: [
-      {step:"5.1", action:"Insert K2 relay into DIN rail socket."},
-      {step:"5.2", action:"Install flyback diode D4 (1N4007) across K2 coil pins 2 and 7. CATHODE BAND TOWARD PIN 2 (+).", warn:true},
-      {step:"5.3", action:"Run W17 (RED 14AWG) from +12V Bus (A) to K1 pole 2 common (pin 8)."},
-      {step:"5.4", action:"Run W18 (RED 16AWG) from K1 pole 2 NO (pin 5) to LS1 terminal 1."},
-      {step:"5.5", action:"Run W19 (RED 16AWG) from LS1 terminal 2 to K2 coil (+) (pin 2)."},
-      {step:"5.6", action:"Run W20 (BLACK 16AWG) from K2 coil (−) (pin 7) to Ground bus."},
-      {step:"5.7", action:"TEST: Jog cylinder to HOME with BWD. Press CYCLE to latch K1.",
-       test:"EXPECTED: Both K1 AND K2 click ON.\nK2 energizes because K1-2 closes (pin 8→5), feeding through LS1 (closed) to K2 coil.\nIf K1 latches but K2 doesn't: check W17, W18, W19, W20."},
+      {step:"5.1", action:"W17: RED 14AWG \u2014 Bus (A) to K1 Pair 2 COM."},
+      {step:"5.2", action:"W18: RED 14AWG \u2014 K1 Pair 2 NO to Node X terminal block."},
+      {step:"5.3", action:"Insert K3 relay. Diode D5 across coil. Cathode toward (+).", warn:true},
+      {step:"5.4", action:"W19: RED 14AWG \u2014 Node X to K3 Pair 1 COM. Jumper K3 Pair 1 COM to K3 Pair 2 COM."},
+      {step:"5.5", action:"W22: RED 16AWG \u2014 Node X to Extend Limit NO pair."},
+      {step:"5.6", action:"W23: RED 16AWG \u2014 Extend Limit NO pair to K3 Coil (+)."},
+      {step:"5.7", action:"W24: RED 16AWG \u2014 K3 Pair 2 NO to K3 Coil (+). This is the seal \u2014 lands on same terminal as W23."},
+      {step:"5.8", action:"W25: BLACK 16AWG \u2014 K3 Coil (\u2212) to Ground bus."},
+      {step:"5.9", action:"TEST: Jog off home. Press CYCLE (K1 latches). Trigger extend limit.",
+       test:"EXPECTED: K3 picks up when extend limit closes.\nRelease extend limit \u2014 K3 STAYS latched (seal holding)."},
     ]
   },
   {
-    phase: "Phase 6: K2 Outputs & Full Test",
-    icon: "✅",
+    phase: "Phase 6: K2 Direction + Outputs",
+    icon: "\u2705",
     steps: [
-      {step:"6.1", action:"Run W21 (RED 14AWG) from +12V Bus (A) to K2 pole 1 common (pin 1)."},
-      {step:"6.2", action:"Run W22 (GREEN 14AWG) from K2 pole 1 NO (pin 4) to SOL-A coil (+)."},
-      {step:"6.3", action:"Run W23 (GREEN 14AWG) from K2 pole 1 NC (pin 3) to SOL-B coil (+)."},
-      {step:"6.4", action:"NOTE: SOL-A and SOL-B ground wires (W06, W09) already connected from Phase 3. Solenoids now have two power sources each — jog buttons and K2."},
-      {step:"6.5", action:"Jog cylinder to HOME with BWD. Place a piece of wood on the splitter bed."},
-      {step:"6.6", action:"FULL TEST: Press CYCLE once and release.",
-       test:"EXPECTED FULL SEQUENCE:\n1. K1 clicks ON (latches)\n2. K2 clicks ON (direction = extend)\n3. SOL-A fires — cylinder extends\n4. Cylinder hits wood, splits, continues to LS1\n5. LS1 opens — K2 clicks OFF\n6. SOL-B fires — cylinder retracts\n7. Cylinder reaches home — LS2 opens\n8. K1 clicks OFF — cycle complete, all quiet"},
-      {step:"6.7", action:"TEST E-STOP: Start another cycle. While extending, press E-STOP.",
-       test:"EXPECTED: Everything stops immediately.\nTwist-release E-STOP — system dead (K1 unlatched).\nJog home with BWD. New cycle should work normally."},
-      {step:"6.8", action:"TEST MANUAL OVERRIDE: During auto cycle, try FWD and BWD buttons.",
-       test:"EXPECTED: Jog buttons still work during auto cycle (they bypass relay logic).\nThis is your backup if a relay ever fails."},
+      {step:"6.1", action:"Insert K2 relay. Diode D4 across coil. Cathode toward (+).", warn:true},
+      {step:"6.2", action:"W20: RED 16AWG \u2014 K3 Pair 1 NC to K2 Coil (+). This is the lock."},
+      {step:"6.3", action:"W21: BLACK 16AWG \u2014 K2 Coil (\u2212) to Ground bus."},
+      {step:"6.4", action:"W26: RED 14AWG \u2014 Node X to K2 Pair 1 COM."},
+      {step:"6.5", action:"W27: GREEN 14AWG \u2014 K2 Pair 1 NO to SOL-A (+)."},
+      {step:"6.6", action:"W28: GREEN 14AWG \u2014 K2 Pair 1 NC to SOL-B (+)."},
+      {step:"6.7", action:"TEST: Jog off home. Press CYCLE.",
+       test:"EXPECTED: K1 latches, K2 picks up. SOL-A fires \u2014 cylinder extends."},
+      {step:"6.8", action:"TEST: Let cylinder hit extend limit.",
+       test:"EXPECTED: K3 picks up, K2 drops. SOL-B fires \u2014 cylinder retracts.\nK2 stays off (no bounce)."},
+      {step:"6.9", action:"TEST: Let cylinder hit retract limit.",
+       test:"EXPECTED: K1 drops. Everything shuts off. Cycle complete."},
+      {step:"6.10", action:"TEST E-STOP: Start a cycle. Press E-STOP mid-extend.",
+       test:"EXPECTED: Everything stops immediately.\nRelease E-STOP. Jog home with BWD. New cycle works."},
+      {step:"6.11", action:"START PROCEDURE: Tap FWD to nudge off home, then press CYCLE.",
+       test:"This is normal. Retract limit prevents K1 from latching at home.\nFWD nudge moves cylinder off limit, then CYCLE starts auto sequence."},
     ]
   },
 ];
@@ -727,107 +736,52 @@ function initNav() {
 
 let installChecked = {};
 
-function initInstall() {
-  // Load saved progress from memory (not localStorage in PWA artifacts)
-  installChecked = {};
-  renderInstall();
-}
+function initInstall() { installChecked = {}; renderInstall(); }
 
 function renderInstall() {
   const el = document.getElementById('install-content');
-  const totalSteps = INSTALL_PHASES.reduce((n, p) => n + p.steps.length, 0);
+  const totalSteps = INSTALL_PHASES.reduce((n,p) => n+p.steps.length, 0);
   const doneSteps = Object.keys(installChecked).length;
-  const pct = Math.round((doneSteps / totalSteps) * 100);
+  const pct = Math.round((doneSteps/totalSteps)*100);
 
-  let html = `<div class="install-progress">
-    <div class="prog-bar-wrap"><div class="prog-bar" style="width:${pct}%"></div></div>
-    <div class="prog-text">${doneSteps}/${totalSteps}</div>
-  </div>`;
+  let html = `<div class="install-progress"><div class="prog-bar-wrap"><div class="prog-bar" style="width:${pct}%"></div></div><div class="prog-text">${doneSteps}/${totalSteps}</div></div>`;
 
-  INSTALL_PHASES.forEach((phase, pi) => {
-    const phaseStepIds = phase.steps.map(s => s.step);
-    const phaseDone = phaseStepIds.every(id => installChecked[id]);
-    const phaseOpen = !phaseDone && (pi === 0 || INSTALL_PHASES[pi-1].steps.every(s => installChecked[s.step]));
-    const doneClass = phaseDone ? ' done' : '';
-    const openClass = phaseOpen ? ' open' : '';
-
-    html += `<div class="install-phase">
-      <div class="phase-header${openClass}${doneClass}" onclick="togglePhase(this)">
-        <span class="phase-icon">${phaseDone ? '✅' : phase.icon}</span>
-        <span class="phase-title">${phase.phase}</span>
-        <span class="phase-count">${phaseStepIds.filter(id => installChecked[id]).length}/${phaseStepIds.length}</span>
-        <span class="phase-arrow">▶</span>
-      </div>
-      <div class="phase-steps${phaseOpen ? ' open' : ''}">`;
-
+  INSTALL_PHASES.forEach((phase,pi) => {
+    const ids=phase.steps.map(s=>s.step);
+    const phaseDone=ids.every(id=>installChecked[id]);
+    const phaseOpen=!phaseDone&&(pi===0||INSTALL_PHASES[pi-1].steps.every(s=>installChecked[s.step]));
+    html += `<div class="install-phase"><div class="phase-header${phaseOpen?' open':''}${phaseDone?' done':''}" onclick="togglePhase(this)"><span class="phase-icon">${phaseDone?'\u2705':phase.icon}</span><span class="phase-title">${phase.phase}</span><span class="phase-count">${ids.filter(id=>installChecked[id]).length}/${ids.length}</span><span class="phase-arrow">\u25b6</span></div><div class="phase-steps${phaseOpen?' open':''}">`;
     phase.steps.forEach(s => {
-      const checked = installChecked[s.step];
-      const action = highlightWireRefs(s.action);
-
-      html += `<div class="inst-step${checked ? ' completed' : ''}">
-        <div class="step-top">
-          <div class="step-check${checked ? ' checked' : ''}" onclick="toggleStep('${s.step}')">✓</div>
-          <div class="step-num">${s.step}</div>
-          <div class="step-action">${s.warn ? '<span class="step-warn">⚠ </span>' : ''}${action}</div>
-        </div>`;
-
-      if (s.test) {
-        html += renderTestBlock(s.test);
-      }
-
-      html += `</div>`;
+      const checked=installChecked[s.step];
+      const action=highlightWireRefs(s.action);
+      html += `<div class="inst-step${checked?' completed':''}"><div class="step-top"><div class="step-check${checked?' checked':''}" onclick="toggleStep('${s.step}')">\u2713</div><div class="step-num">${s.step}</div><div class="step-action">${s.warn?'<span class="step-warn">\u26a0 </span>':''}${action}</div></div>`;
+      if(s.test) html += renderTestBlock(s.test);
+      html += '</div>';
     });
-
-    html += `</div></div>`;
+    html += '</div></div>';
   });
-
-  html += `<button class="ts-restart" onclick="resetInstall()" style="margin-top:.5rem">↩ Reset All Progress</button>`;
-
+  html += `<button class="ts-restart" onclick="resetInstall()" style="margin-top:.5rem">\u21a9 Reset All Progress</button>`;
   el.innerHTML = html;
 }
 
-function togglePhase(header) {
-  header.classList.toggle('open');
-  const steps = header.nextElementSibling;
-  steps.classList.toggle('open');
-}
-
-function toggleStep(stepId) {
-  if (installChecked[stepId]) {
-    delete installChecked[stepId];
-  } else {
-    installChecked[stepId] = true;
-  }
-  renderInstall();
-}
-
-function resetInstall() {
-  if (Object.keys(installChecked).length === 0) return;
-  installChecked = {};
-  renderInstall();
-}
+function togglePhase(h){ h.classList.toggle('open'); h.nextElementSibling.classList.toggle('open'); }
+function toggleStep(id){ if(installChecked[id]) delete installChecked[id]; else installChecked[id]=true; renderInstall(); }
+function resetInstall(){ if(!Object.keys(installChecked).length) return; installChecked={}; renderInstall(); }
 
 function renderTestBlock(raw) {
-  const lines = raw.split('\n');
-  let html = '<div class="step-test"><div class="test-title">⚠ TEST CHECKPOINT</div>';
-  lines.forEach(line => {
-    line = line.trim();
-    if (!line) return;
-    if (line.startsWith('EXPECTED')) {
-      html += `<div class="test-line expected">${line}</div>`;
-    } else if (line.startsWith('If ')) {
-      html += `<div class="test-line if-fail">${line}</div>`;
-    } else {
-      html += `<div class="test-line">${line}</div>`;
-    }
+  const lines=raw.split('\n');
+  let html='<div class="step-test"><div class="test-title">\u26a0 TEST CHECKPOINT</div>';
+  lines.forEach(line => { line=line.trim(); if(!line) return;
+    if(line.startsWith('EXPECTED')) html+=`<div class="test-line expected">${line}</div>`;
+    else if(line.startsWith('If')) html+=`<div class="test-line if-fail">${line}</div>`;
+    else html+=`<div class="test-line">${line}</div>`;
   });
-  html += '</div>';
-  return html;
+  return html+'</div>';
 }
 
 function highlightWireRefs(text) {
-  return text.replace(/\b(W\d{2})\b/g, '<span class="wire-ref">$1</span>')
-             .replace(/\b(SOL-[AB]|LS[12]|K[12]|D[1-4])\b/g, '<span class="wire-ref">$1</span>');
+  return text.replace(/\b(W\d{2})\b/g,'<span class="wire-ref">$1</span>')
+    .replace(/\b(SOL-[AB]|K[123]|D[1-5])\b/g,'<span class="wire-ref">$1</span>');
 }
 
 function initWiring() {
@@ -846,21 +800,16 @@ function buildWireTable(filter) {
   tbody.innerHTML = rows.map(w => {
     const cc = w.color === 'RED' ? 'wire-red' : w.color === 'GRN' ? 'wire-grn' : 'wire-blk';
     const colorName = w.color === 'BLK' ? 'BLACK' : w.color === 'GRN' ? 'GREEN' : 'RED';
-    return `<tr>
-      <td class="wire-id">${w.id}</td>
-      <td class="${cc}">${colorName}</td>
-      <td>${w.awg}</td>
-      <td>${w.from} → ${w.to}</td>
-    </tr>`;
+    return `<tr><td class="wire-id">${w.id}</td><td class="${cc}">${colorName}</td><td>${w.awg}</td><td>${w.from} \u2192 ${w.to}</td></tr>`;
   }).join('');
 }
 
 function buildRelayTable(el, relayKey) {
   const r = RELAY_PINS[relayKey];
-  el.innerHTML = `<table class="tbl"><thead><tr><th>Pin</th><th>Function</th><th>Wire</th><th>Connection</th></tr></thead><tbody>` +
+  el.innerHTML = `<table class="tbl"><thead><tr><th>Terminal</th><th>Wire</th><th>Connection</th></tr></thead><tbody>` +
     r.pins.map(p => {
-      const unused = p.wire === '—';
-      return `<tr><td class="wire-id">${p.pin}</td><td>${p.func}</td><td>${unused ? '<span class="unused">—</span>' : p.wire}</td><td${unused ? ' class="unused"' : ''}>${p.conn}</td></tr>`;
+      const unused = p.wire === '\u2014';
+      return `<tr><td class="wire-id">${p.pin}</td><td>${unused ? '<span class="unused">\u2014</span>' : p.wire}</td><td${unused ? ' class="unused"' : ''}>${p.conn}</td></tr>`;
     }).join('') + '</tbody></table>';
 }
 
@@ -870,7 +819,7 @@ function initTracer() {
   WIRES.forEach(w => {
     const opt = document.createElement('option');
     opt.value = 'wire_' + w.id;
-    opt.textContent = w.id + ' — ' + w.desc;
+    opt.textContent = w.id + ' \u2014 ' + w.desc;
     wireGroup.appendChild(opt);
   });
   sel.addEventListener('change', () => renderTrace(sel.value));
@@ -879,22 +828,13 @@ function initTracer() {
 
 function renderTrace(key) {
   const el = document.getElementById('trace-result');
-
-  if (key.startsWith('wire_')) {
-    renderSingleWire(el, key.replace('wire_', ''));
-    return;
-  }
-
+  if (key.startsWith('wire_')) { renderSingleWire(el, key.replace('wire_','')); return; }
   const c = CIRCUITS[key];
   if (!c) { el.innerHTML = ''; return; }
-
   let html = `<div class="trace-path"><div class="trace-label">${c.label}</div><div class="trace-flow">${pathToHTML(c.path)}</div>`;
-  if (c.note) html += `<div class="trace-note">ℹ ${c.note}</div>`;
+  if (c.note) html += `<div class="trace-note">\u2139 ${c.note}</div>`;
   html += '</div>';
-
-  if (c.alt) {
-    html += `<div class="trace-path" style="opacity:.85"><div class="trace-label">${c.alt.label}</div><div class="trace-flow">${pathToHTML(c.alt.path)}</div></div>`;
-  }
+  if (c.alt) html += `<div class="trace-path" style="opacity:.85"><div class="trace-label">${c.alt.label}</div><div class="trace-flow">${pathToHTML(c.alt.path)}</div></div>`;
   el.innerHTML = html;
 }
 
@@ -904,341 +844,223 @@ function renderSingleWire(el, wireId) {
   const cls = w.color === 'RED' ? 'comp-power' : w.color === 'GRN' ? 'comp-solenoid' : 'comp-ground';
   const colorName = w.color === 'BLK' ? 'BLACK' : w.color === 'GRN' ? 'GREEN' : 'RED';
   const circuits = findCircuitsForWire(wireId);
-  el.innerHTML = `
-    <div class="trace-path">
-      <div class="trace-label">${w.id} — ${w.desc}</div>
-      <div class="trace-flow" style="margin-top:.4rem">
-        <span class="trace-component ${cls}">${w.from}</span>
-        <span class="trace-arrow">—</span>
-        <span class="trace-wire">${w.id} · ${colorName} ${w.awg}AWG</span>
-        <span class="trace-arrow">→</span>
-        <span class="trace-component ${cls}">${w.to}</span>
-      </div>
-    </div>
-    ${circuits.length ? `<div class="card"><div class="trace-circuits"><strong>Part of:</strong> ${circuits.join(', ')}</div></div>` : ''}`;
+  el.innerHTML = `<div class="trace-path"><div class="trace-label">${w.id} \u2014 ${w.desc}</div><div class="trace-flow" style="margin-top:.4rem"><span class="trace-component ${cls}">${w.from}</span><span class="trace-arrow">\u2014</span><span class="trace-wire">${w.id} \u00b7 ${colorName} ${w.awg}AWG</span><span class="trace-arrow">\u2192</span><span class="trace-component ${cls}">${w.to}</span></div></div>${circuits.length?`<div class="card"><div class="trace-circuits"><strong>Part of:</strong> ${circuits.join(', ')}</div></div>`:''}`;
 }
 
 function pathToHTML(path) {
   return path.map(seg => {
-    if (seg.wire) {
-      return `<span class="trace-arrow">→</span><span class="trace-wire">${seg.wire}</span><span class="trace-arrow">→</span>`;
-    }
-    const cls = 'comp-' + seg.type;
-    return `<span class="trace-component ${cls}">${seg.name}</span>`;
+    if (seg.wire) return `<span class="trace-arrow">\u2192</span><span class="trace-wire">${seg.wire}</span><span class="trace-arrow">\u2192</span>`;
+    return `<span class="trace-component comp-${seg.type}">${seg.name}</span>`;
   }).join('');
 }
 
 let tsHistory = [];
 
-function initTroubleshoot() {
-  tsHistory = [];
-  renderTsNode('start');
-}
+function initTroubleshoot() { tsHistory = []; renderTsNode('start'); }
 
 function renderTsNode(nodeId) {
   const flow = document.getElementById('ts-flow');
   const node = TS_TREE[nodeId];
   if (!node) return;
-
-  // Update breadcrumb
-  if (nodeId === 'start') {
-    tsHistory = [{id:'start', label:'Start'}];
-  }
+  if (nodeId === 'start') tsHistory = [{id:'start', label:'Start'}];
   renderBreadcrumb();
-
   flow.innerHTML = '';
-
   if (node.answer) {
-    flow.innerHTML = renderAnswer(node.answer) + `<button class="ts-restart" onclick="tsRestart()">↩ Start Over</button>`;
+    flow.innerHTML = renderAnswer(node.answer) + `<button class="ts-restart" onclick="tsRestart()">\u21a9 Start Over</button>`;
     return;
   }
-
   const div = document.createElement('div');
   div.className = 'ts-node';
-  div.innerHTML = `
-    <div class="ts-question">${node.q}</div>
-    <div class="ts-options">
-      ${node.opts.map((o, i) => `<button class="ts-btn" onclick="tsChoose('${o.next}','${escAttr(o.label)}')">${o.label}</button>`).join('')}
-    </div>`;
+  div.innerHTML = `<div class="ts-question">${node.q}</div><div class="ts-options">${node.opts.map(o => `<button class="ts-btn" onclick="tsChoose('${o.next}','${escAttr(o.label)}')">${o.label}</button>`).join('')}</div>`;
   flow.appendChild(div);
   flow.appendChild(createRestartBtn());
 }
 
 function tsChoose(nextId, label) {
-  tsHistory.push({id: nextId, label: label});
+  tsHistory.push({id:nextId, label:label});
   renderTsNode(nextId);
   document.querySelector('.content').scrollTop = 0;
 }
 
-function tsRestart() {
-  tsHistory = [];
-  renderTsNode('start');
-  document.querySelector('.content').scrollTop = 0;
-}
+function tsRestart() { tsHistory=[]; renderTsNode('start'); document.querySelector('.content').scrollTop=0; }
 
-function tsJumpTo(index) {
-  tsHistory = tsHistory.slice(0, index + 1);
-  renderTsNode(tsHistory[index].id);
-}
+function tsJumpTo(index) { tsHistory=tsHistory.slice(0,index+1); renderTsNode(tsHistory[index].id); }
 
 function renderBreadcrumb() {
   const bc = document.getElementById('ts-breadcrumb');
-  if (tsHistory.length <= 1) { bc.innerHTML = ''; return; }
-  bc.innerHTML = tsHistory.map((h, i) => {
-    const isLast = i === tsHistory.length - 1;
-    const text = i === 0 ? '⟵ Start' : truncate(h.label, 20);
-    return (i > 0 ? '<span class="sep">›</span>' : '') +
-      (isLast ? `<span style="color:var(--accent)">${text}</span>` : `<span onclick="tsJumpTo(${i})">${text}</span>`);
+  if (tsHistory.length<=1) { bc.innerHTML=''; return; }
+  bc.innerHTML = tsHistory.map((h,i) => {
+    const isLast = i===tsHistory.length-1;
+    const text = i===0 ? '\u27f5 Start' : truncate(h.label,20);
+    return (i>0?'<span class="sep">\u203a</span>':'') +
+      (isLast?`<span style="color:var(--accent)">${text}</span>`:`<span onclick="tsJumpTo(${i})">${text}</span>`);
   }).join('');
 }
 
 function renderAnswer(raw) {
   const lines = raw.split('|');
   let html = '<div class="ts-answer">';
-  lines.forEach((line, i) => {
+  lines.forEach((line,i) => {
     line = line.trim();
-    if (i === 0) {
-      html += `<strong>${line}</strong>`;
-    } else if (line.startsWith('FIX:')) {
-      html += `<div class="line"><span class="fix">✓ ${line}</span></div>`;
-    } else if (line.startsWith('WARNING:') || line.startsWith('Do NOT')) {
-      html += `<div class="line"><span class="warn">⚠ ${line}</span></div>`;
-    } else if (line.startsWith('TRACE:') || line.startsWith('CHECK:')) {
-      html += `<div class="trace">${line}</div>`;
-    } else {
-      html += `<div class="line">${line}</div>`;
-    }
+    if (i===0) html += `<strong>${line}</strong>`;
+    else if (line.startsWith('FIX:')) html += `<div class="line"><span class="fix">\u2713 ${line}</span></div>`;
+    else if (line.startsWith('WARNING:')||line.startsWith('Do NOT')) html += `<div class="line"><span class="warn">\u26a0 ${line}</span></div>`;
+    else if (line.startsWith('TRACE:')||line.startsWith('CHECK:')) html += `<div class="trace">${line}</div>`;
+    else html += `<div class="line">${line}</div>`;
   });
-  html += '</div>';
-  return html;
+  return html+'</div>';
 }
 
 function createRestartBtn() {
-  const btn = document.createElement('button');
-  btn.className = 'ts-restart';
-  btn.textContent = '↩ Start Over';
-  btn.onclick = tsRestart;
-  return btn;
+  const btn=document.createElement('button'); btn.className='ts-restart';
+  btn.textContent='\u21a9 Start Over'; btn.onclick=tsRestart; return btn;
 }
 
-function truncate(s, n) { return s.length > n ? s.slice(0, n) + '…' : s; }
-function escAttr(s) { return s.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
+function truncate(s,n){ return s.length>n?s.slice(0,n)+'\u2026':s; }
+function escAttr(s){ return s.replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
 
 let sim = {
-  pos: 0,         // 0=home, 100=full extend
-  k1: false,
-  k2: false,
-  solA: false,
-  solB: false,
-  ls1: false,      // true = actuated (circuit open)
-  ls2: true,       // true = actuated (at home, circuit open)
-  estop: false,
-  jogging: null,   // 'fwd' or 'bwd' or null
-  cycling: false,
-  phase: 'idle',   // idle, extending, retracting, estop
-  animFrame: null,
-  lastTime: 0,
+  pos: 0, k1: false, k2: false, k3: false,
+  solA: false, solB: false,
+  extLim: false, retLim: true,
+  estop: false, jogging: null,
+  cycling: false, phase: 'idle',
+  animFrame: null, lastTime: 0,
 };
+const SIM_SPEED = 40;
 
-const SIM_SPEED = 40; // % per second
-
-function initSimulator() {
-  simReset();
-  simRender();
-}
+function initSimulator() { simReset(); simRender(); }
 
 function simReset() {
-  sim.pos = 0; sim.k1 = false; sim.k2 = false;
-  sim.solA = false; sim.solB = false;
-  sim.ls1 = false; sim.ls2 = true;
-  sim.estop = false; sim.jogging = null;
-  sim.cycling = false; sim.phase = 'idle';
-  if (sim.animFrame) cancelAnimationFrame(sim.animFrame);
-  sim.animFrame = null;
+  sim.pos=0; sim.k1=false; sim.k2=false; sim.k3=false;
+  sim.solA=false; sim.solB=false;
+  sim.extLim=false; sim.retLim=true;
+  sim.estop=false; sim.jogging=null;
+  sim.cycling=false; sim.phase='idle';
+  if(sim.animFrame) cancelAnimationFrame(sim.animFrame);
+  sim.animFrame=null;
 }
 
 function simJog(dir, pressed) {
-  if (sim.estop) return;
-  if (pressed) {
-    sim.jogging = dir;
-    sim.solA = (dir === 'fwd');
-    sim.solB = (dir === 'bwd');
+  if(sim.estop) return;
+  if(pressed) {
+    sim.jogging=dir;
+    sim.solA=(dir==='fwd'); sim.solB=(dir==='bwd');
     startSimLoop();
   } else {
-    if (sim.jogging === dir) {
-      sim.jogging = null;
-      if (!sim.cycling) {
-        sim.solA = false;
-        sim.solB = false;
-        sim.phase = 'idle';
-      }
+    if(sim.jogging===dir) {
+      sim.jogging=null;
+      if(!sim.cycling) { sim.solA=false; sim.solB=false; sim.phase='idle'; }
     }
   }
   simRender();
 }
 
 function simCycle() {
-  if (sim.estop) return;
-  if (sim.cycling) return;
-  if (sim.pos > 5) {
-    simSetStatus('⚠ Jog to HOME first (use BWD)');
+  if(sim.estop) return;
+  if(sim.cycling) return;
+  if(sim.retLim) {
+    simSetStatus('\u26a0 Tap FWD to nudge off home first, then CYCLE');
     return;
   }
-  sim.cycling = true;
-  sim.k1 = true;
-  sim.k2 = true;
-  sim.solA = true;
-  sim.solB = false;
-  sim.phase = 'extending';
-  startSimLoop();
-  simRender();
+  sim.cycling=true; sim.k1=true; sim.k2=true; sim.k3=false;
+  sim.solA=true; sim.solB=false; sim.phase='extending';
+  startSimLoop(); simRender();
 }
 
 function simEstop() {
-  sim.estop = true;
-  sim.k1 = false; sim.k2 = false;
-  sim.solA = false; sim.solB = false;
-  sim.cycling = false; sim.jogging = null;
-  sim.phase = 'estop';
-  simRender();
-  // Auto-release after 2s for demo
-  setTimeout(() => {
-    sim.estop = false;
-    sim.phase = 'idle';
-    simRender();
-  }, 2000);
+  sim.estop=true; sim.k1=false; sim.k2=false; sim.k3=false;
+  sim.solA=false; sim.solB=false; sim.cycling=false; sim.jogging=null;
+  sim.phase='estop'; simRender();
+  setTimeout(()=>{ sim.estop=false; sim.phase='idle'; simRender(); }, 2000);
 }
 
 function startSimLoop() {
-  if (sim.animFrame) return;
-  sim.lastTime = performance.now();
-  sim.animFrame = requestAnimationFrame(simTick);
+  if(sim.animFrame) return;
+  sim.lastTime=performance.now();
+  sim.animFrame=requestAnimationFrame(simTick);
 }
 
 function simTick(now) {
-  const dt = (now - sim.lastTime) / 1000;
-  sim.lastTime = now;
+  const dt=(now-sim.lastTime)/1000; sim.lastTime=now;
+  if(sim.estop){ sim.animFrame=null; return; }
+  let moving=false;
 
-  if (sim.estop) {
-    sim.animFrame = null;
-    return;
+  if(sim.jogging==='fwd'&&sim.pos<100){ sim.pos=Math.min(100,sim.pos+SIM_SPEED*dt); moving=true; }
+  if(sim.jogging==='bwd'&&sim.pos>0){ sim.pos=Math.max(0,sim.pos-SIM_SPEED*dt); moving=true; }
+
+  if(sim.cycling) {
+    if(sim.phase==='extending'&&sim.solA){ sim.pos=Math.min(100,sim.pos+SIM_SPEED*dt); moving=true; }
+    if(sim.phase==='retracting'&&sim.solB){ sim.pos=Math.max(0,sim.pos-SIM_SPEED*dt); moving=true; }
   }
 
-  let moving = false;
+  sim.extLim=(sim.pos>=98);
+  sim.retLim=(sim.pos<=2);
 
-  // Jog movement
-  if (sim.jogging === 'fwd' && sim.pos < 100) {
-    sim.pos = Math.min(100, sim.pos + SIM_SPEED * dt);
-    moving = true;
-  }
-  if (sim.jogging === 'bwd' && sim.pos > 0) {
-    sim.pos = Math.max(0, sim.pos - SIM_SPEED * dt);
-    moving = true;
-  }
-
-  // Cycle movement
-  if (sim.cycling) {
-    if (sim.phase === 'extending' && sim.solA) {
-      sim.pos = Math.min(100, sim.pos + SIM_SPEED * dt);
-      moving = true;
+  if(sim.cycling) {
+    // K3 latches when extend limit closes, stays latched via seal
+    if(sim.extLim && !sim.k3) {
+      sim.k3=true; // K3 latches
+      sim.k2=false; // K3 NC opens, killing K2
+      sim.solA=false; sim.solB=true;
+      sim.phase='retracting';
     }
-    if (sim.phase === 'retracting' && sim.solB) {
-      sim.pos = Math.max(0, sim.pos - SIM_SPEED * dt);
-      moving = true;
-    }
-  }
+    // K2 stays off because K3 is latched (seal holds K3 on)
+    // No bounce possible
 
-  // Limit switch logic
-  sim.ls1 = (sim.pos >= 98);
-  sim.ls2 = (sim.pos <= 2);
-
-  // Auto-cycle state transitions
-  if (sim.cycling) {
-    if (sim.phase === 'extending' && sim.ls1) {
-      // LS1 opens → K2 drops → changeover → retract
-      sim.k2 = false;
-      sim.solA = false;
-      sim.solB = true;
-      sim.phase = 'retracting';
-    }
-    if (sim.phase === 'retracting' && sim.ls2) {
-      // LS2 opens → K1 drops → cycle complete
-      sim.k1 = false; sim.k2 = false;
-      sim.solA = false; sim.solB = false;
-      sim.cycling = false;
-      sim.phase = 'idle';
+    if(sim.phase==='retracting'&&sim.retLim) {
+      sim.k1=false; sim.k2=false; sim.k3=false;
+      sim.solA=false; sim.solB=false;
+      sim.cycling=false; sim.phase='idle';
     }
   }
-
-  // Update jog limit switches
-  if (sim.jogging === 'fwd' && sim.pos >= 100) moving = false;
-  if (sim.jogging === 'bwd' && sim.pos <= 0) moving = false;
 
   simRender();
-
-  if (moving || sim.cycling) {
-    sim.animFrame = requestAnimationFrame(simTick);
-  } else {
-    sim.animFrame = null;
-  }
+  if(moving||sim.cycling) sim.animFrame=requestAnimationFrame(simTick);
+  else sim.animFrame=null;
 }
 
 function simRender() {
-  // Buttons
-  document.getElementById('sim-fwd').className = 'sim-btn' + (sim.jogging === 'fwd' ? ' active-fwd' : '');
-  document.getElementById('sim-bwd').className = 'sim-btn' + (sim.jogging === 'bwd' ? ' active-bwd' : '');
-  document.getElementById('sim-cycle').className = 'sim-btn' + (sim.cycling ? ' active-cycle' : '');
-  document.getElementById('sim-estop').className = 'sim-btn' + (sim.estop ? ' active-estop' : '');
+  document.getElementById('sim-fwd').className='sim-btn'+(sim.jogging==='fwd'?' active-fwd':'');
+  document.getElementById('sim-bwd').className='sim-btn'+(sim.jogging==='bwd'?' active-bwd':'');
+  document.getElementById('sim-cycle').className='sim-btn'+(sim.cycling?' active-cycle':'');
+  document.getElementById('sim-estop').className='sim-btn'+(sim.estop?' active-estop':'');
 
-  // Status
   const statusMap = {
-    idle: '<span class="state">IDLE</span> — Ready',
-    extending: '<span class="state">EXTENDING</span> — K1 latched, K2 on, SOL-A firing',
-    retracting: '<span class="state">RETRACTING</span> — K1 latched, K2 off, SOL-B firing',
-    estop: '<span class="state" style="color:var(--red)">E-STOP</span> — All power killed',
+    idle:'<span class="state">IDLE</span> \u2014 Ready',
+    extending:'<span class="state">EXTENDING</span> \u2014 K1+K2 on, SOL-A firing',
+    retracting:'<span class="state">RETRACTING</span> \u2014 K1+K3 on, K2 locked off, SOL-B firing',
+    estop:'<span class="state" style="color:var(--red)">E-STOP</span> \u2014 All power killed',
   };
-  let statusText = statusMap[sim.phase] || '';
-  if (sim.jogging === 'fwd' && !sim.cycling) statusText = '<span class="state">JOG FWD</span> — Manual extend';
-  if (sim.jogging === 'bwd' && !sim.cycling) statusText = '<span class="state">JOG BWD</span> — Manual retract';
-  document.getElementById('sim-status').innerHTML = statusText;
+  let st=statusMap[sim.phase]||'';
+  if(sim.jogging==='fwd'&&!sim.cycling) st='<span class="state">JOG FWD</span> \u2014 Manual extend';
+  if(sim.jogging==='bwd'&&!sim.cycling) st='<span class="state">JOG BWD</span> \u2014 Manual retract';
+  document.getElementById('sim-status').innerHTML=st;
 
-  // Component grid
-  setSimItem('si-k1', sim.k1);
-  setSimItem('si-k2', sim.k2);
-  setSimItem('si-sola', sim.solA);
-  setSimItem('si-solb', sim.solB);
-  setSimItem('si-ls1', sim.ls1);
-  setSimItem('si-ls2', sim.ls2);
+  setSimItem('si-k1',sim.k1); setSimItem('si-k2',sim.k2); setSimItem('si-k3',sim.k3);
+  setSimItem('si-sola',sim.solA); setSimItem('si-solb',sim.solB);
+  setSimItem('si-extlim',sim.extLim); setSimItem('si-retlim',sim.retLim);
 
-  // Cylinder
-  const pct = Math.max(10, sim.pos);
-  document.getElementById('cyl-rod').style.width = pct + '%';
-  document.getElementById('cyl-ls2').className = 'cyl-ls' + (sim.ls2 ? ' active' : '');
-  document.getElementById('cyl-ls1').className = 'cyl-ls' + (sim.ls1 ? ' active' : '');
+  document.getElementById('cyl-rod').style.width=Math.max(10,sim.pos)+'%';
+  document.getElementById('cyl-retlim').className='cyl-ls'+(sim.retLim?' active':'');
+  document.getElementById('cyl-extlim').className='cyl-ls'+(sim.extLim?' active':'');
 }
 
-function setSimItem(id, on) {
-  const el = document.getElementById(id);
-  el.className = 'sim-item ' + (on ? 'on' : 'off');
-}
-
-function simSetStatus(msg) {
-  document.getElementById('sim-status').innerHTML = msg;
-}
+function setSimItem(id,on){ document.getElementById(id).className='sim-item '+(on?'on':'off'); }
+function simSetStatus(msg){ document.getElementById('sim-status').innerHTML=msg; }
 
 
-// Init
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initInstall();
   initWiring();
   buildRelayTable(document.getElementById('k1-table'), 'K1');
   buildRelayTable(document.getElementById('k2-table'), 'K2');
+  buildRelayTable(document.getElementById('k3-table'), 'K3');
   initTracer();
   initTroubleshoot();
   initSimulator();
 
-  // Simulator button events (touch + mouse)
   const fwd = document.getElementById('sim-fwd');
   const bwd = document.getElementById('sim-bwd');
   fwd.addEventListener('mousedown', () => simJog('fwd', true));
@@ -1255,7 +1077,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('sim-estop').addEventListener('click', simEstop);
 });
 
-// Register service worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }

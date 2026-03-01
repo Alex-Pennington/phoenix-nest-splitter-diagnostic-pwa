@@ -14,20 +14,15 @@ function buildWireTable(filter) {
   tbody.innerHTML = rows.map(w => {
     const cc = w.color === 'RED' ? 'wire-red' : w.color === 'GRN' ? 'wire-grn' : 'wire-blk';
     const colorName = w.color === 'BLK' ? 'BLACK' : w.color === 'GRN' ? 'GREEN' : 'RED';
-    return `<tr>
-      <td class="wire-id">${w.id}</td>
-      <td class="${cc}">${colorName}</td>
-      <td>${w.awg}</td>
-      <td>${w.from} → ${w.to}</td>
-    </tr>`;
+    return `<tr><td class="wire-id">${w.id}</td><td class="${cc}">${colorName}</td><td>${w.awg}</td><td>${w.from} \u2192 ${w.to}</td></tr>`;
   }).join('');
 }
 
 function buildRelayTable(el, relayKey) {
   const r = RELAY_PINS[relayKey];
-  el.innerHTML = `<table class="tbl"><thead><tr><th>Pin</th><th>Function</th><th>Wire</th><th>Connection</th></tr></thead><tbody>` +
+  el.innerHTML = `<table class="tbl"><thead><tr><th>Terminal</th><th>Wire</th><th>Connection</th></tr></thead><tbody>` +
     r.pins.map(p => {
-      const unused = p.wire === '—';
-      return `<tr><td class="wire-id">${p.pin}</td><td>${p.func}</td><td>${unused ? '<span class="unused">—</span>' : p.wire}</td><td${unused ? ' class="unused"' : ''}>${p.conn}</td></tr>`;
+      const unused = p.wire === '\u2014';
+      return `<tr><td class="wire-id">${p.pin}</td><td>${unused ? '<span class="unused">\u2014</span>' : p.wire}</td><td${unused ? ' class="unused"' : ''}>${p.conn}</td></tr>`;
     }).join('') + '</tbody></table>';
 }
