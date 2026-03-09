@@ -89,4 +89,364 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);overf
       <rect x="20" y="30" width="60" height="30" class="comp-body" id="batt-body"/>
       <text x="50" y="49" class="comp-label">12V</text>
       <text x="50" y="20" class="comp-sublabel">BATTERY</text>
-      <!--
+      <!-- W01: Batt+ to Fuse -->
+      <path d="M80 45 H130" class="wire" id="w01"/>
+      <!-- Fuse -->
+      <rect x="130" y="33" width="44" height="24" class="comp-body"/>
+      <text x="152" y="49" class="comp-label">FUSE</text>
+      <text x="152" y="27" class="comp-sublabel">15A</text>
+      <!-- W02: Fuse to E-Stop -->
+      <path d="M174 45 H220" class="wire" id="w02"/>
+      <!-- E-Stop -->
+      <rect x="220" y="33" width="56" height="24" class="comp-body" id="estop-body"/>
+      <text x="248" y="49" class="comp-label">E-STOP</text>
+      <text x="248" y="27" class="comp-sublabel">NC</text>
+      <!-- W03: E-Stop to Bus A -->
+      <path d="M276 45 H340" class="wire" id="w03"/>
+      <!-- Bus A rail (horizontal) -->
+      <path d="M340 45 H860" class="wire" id="busA" style="stroke-width:3"/>
+      <text x="345" y="38" class="comp-sublabel" style="text-anchor:start;fill:var(--accent);font-size:9px">BUS A (+12V)</text>
+
+      <!-- ===== GND BUS ===== -->
+      <path d="M50 490 H860" class="wire gnd" id="gndBus" style="stroke-width:3"/>
+      <text x="50" y="505" class="comp-sublabel" style="text-anchor:start;fill:var(--blue);font-size:9px">GND BUS</text>
+      <path d="M50 60 V490" class="wire gnd" id="w29"/>
+
+      <!-- ===== FWD JOG (SOL-A direct) ===== -->
+      <path d="M400 45 V80" class="wire" id="w04a"/>
+      <rect x="380" y="80" width="40" height="24" class="comp-body" id="fwd-no-body"/>
+      <text x="400" y="96" class="comp-label" style="font-size:8px">FWD</text>
+      <text x="400" y="74" class="comp-sublabel">NO</text>
+      <path d="M400 104 V140" class="wire" id="w05a"/>
+      <rect x="380" y="140" width="40" height="24" class="comp-body solenoid-body" id="sola-jog-body"/>
+      <text x="400" y="156" class="comp-label" style="font-size:8px">SOL-A</text>
+      <path d="M400 164 V490" class="wire gnd" id="w06a"/>
+
+      <!-- ===== BWD JOG (SOL-B direct) ===== -->
+      <path d="M460 45 V80" class="wire" id="w07a"/>
+      <rect x="440" y="80" width="40" height="24" class="comp-body" id="bwd-no-body"/>
+      <text x="460" y="96" class="comp-label" style="font-size:8px">BWD</text>
+      <text x="460" y="74" class="comp-sublabel">NO</text>
+      <path d="M460 104 V140" class="wire" id="w08a"/>
+      <rect x="440" y="140" width="40" height="24" class="comp-body solenoid-body" id="solb-jog-body"/>
+      <text x="460" y="156" class="comp-label" style="font-size:8px">SOL-B</text>
+      <path d="M460 164 V490" class="wire gnd" id="w09a"/>
+
+      <!-- ===== K1 DIRECT PATH (CYCLE btn) ===== -->
+      <path d="M540 45 V80" class="wire" id="w10"/>
+      <rect x="520" y="80" width="40" height="24" class="comp-body" id="cycle-body"/>
+      <text x="540" y="96" class="comp-label" style="font-size:8px">CYCLE</text>
+      <text x="540" y="74" class="comp-sublabel">NO</text>
+      <path d="M540 104 V160" class="wire" id="w11"/>
+      <!-- K1 Coil -->
+      <rect x="520" y="160" width="40" height="30" class="comp-body" id="k1-coil"/>
+      <text x="540" y="179" class="comp-label">K1</text>
+      <text x="540" y="200" class="comp-sublabel">COIL</text>
+      <circle cx="562" cy="165" r="4" class="relay-indicator" id="k1-led"/>
+      <path d="M540 190 V490" class="wire gnd" id="w16"/>
+
+      <!-- ===== K1 SEAL PATH ===== -->
+      <path d="M620 45 V80" class="wire" id="w12"/>
+      <!-- K1 P1 NO (seal contact) -->
+      <rect x="600" y="80" width="40" height="24" class="comp-body" id="k1p1-body"/>
+      <text x="620" y="96" class="comp-label" style="font-size:7px">K1 P1</text>
+      <text x="620" y="74" class="comp-sublabel">NO (seal)</text>
+      <path d="M620 104 V130" class="wire" id="w13"/>
+      <!-- FWD NC -->
+      <rect x="600" y="130" width="40" height="20" class="comp-body" id="fwd-nc-body"/>
+      <text x="620" y="144" class="comp-label" style="font-size:7px">FWD NC</text>
+      <path d="M620 150 V170" class="wire" id="w31"/>
+      <!-- BWD NC -->
+      <rect x="600" y="170" width="40" height="20" class="comp-body" id="bwd-nc-body"/>
+      <text x="620" y="184" class="comp-label" style="font-size:7px">BWD NC</text>
+      <path d="M620 190 V210" class="wire" id="w32"/>
+      <!-- Ret Lim NC -->
+      <rect x="600" y="210" width="40" height="20" class="comp-body" id="retlim-nc-body"/>
+      <text x="620" y="224" class="comp-label" style="font-size:7px">RET NC</text>
+      <!-- W14 to K1 coil -->
+      <path d="M620 230 V175 H560" class="wire" id="w14"/>
+
+      <!-- ===== NODE X ===== -->
+      <path d="M700 45 V80" class="wire" id="w17"/>
+      <rect x="680" y="80" width="40" height="24" class="comp-body" id="k1p2-body"/>
+      <text x="700" y="96" class="comp-label" style="font-size:7px">K1 P2</text>
+      <text x="700" y="74" class="comp-sublabel">NO</text>
+      <path d="M700 104 V120" class="wire" id="w18"/>
+      <circle cx="700" cy="120" class="node-dot" id="nodeX-dot"/>
+      <text x="700" y="114" class="comp-sublabel" style="fill:var(--accent);font-size:8px">NODE X</text>
+      <!-- Node X distributes to K3, K2 output, and extend limit -->
+      <path d="M700 120 H700 V140" class="wire" id="nx-down"/>
+
+      <!-- ===== K3 COIL (via extend limit) ===== -->
+      <path d="M700 140 H760 V180" class="wire" id="w22"/>
+      <rect x="740" y="180" width="40" height="20" class="comp-body" id="extlim-body"/>
+      <text x="760" y="194" class="comp-label" style="font-size:7px">EXT NO</text>
+      <path d="M760 200 V230" class="wire" id="w23"/>
+      <rect x="740" y="230" width="40" height="30" class="comp-body" id="k3-coil"/>
+      <text x="760" y="249" class="comp-label">K3</text>
+      <text x="760" y="268" class="comp-sublabel">COIL</text>
+      <circle cx="782" cy="235" r="4" class="relay-indicator" id="k3-led"/>
+      <path d="M760 260 V490" class="wire gnd" id="w25"/>
+      <!-- K3 Seal (P2 NO) -->
+      <rect x="790" y="200" width="36" height="18" class="comp-body" id="k3p2-body"/>
+      <text x="808" y="213" class="comp-label" style="font-size:6px">K3 SEAL</text>
+      <path d="M808 218 V245 H780" class="wire" id="w24"/>
+      <path d="M808 200 V140 H760" class="wire" id="w24-feed"/>
+
+      <!-- ===== K2 COIL (via K3 NC lock) ===== -->
+      <path d="M700 140 V180" class="wire" id="w19-down"/>
+      <rect x="680" y="180" width="40" height="20" class="comp-body" id="k3p1nc-body"/>
+      <text x="700" y="194" class="comp-label" style="font-size:7px">K3 NC</text>
+      <text x="700" y="175" class="comp-sublabel">LOCK</text>
+      <path d="M700 200 V230" class="wire" id="w20"/>
+      <rect x="680" y="230" width="40" height="30" class="comp-body" id="k2-coil"/>
+      <text x="700" y="249" class="comp-label">K2</text>
+      <text x="700" y="268" class="comp-sublabel">COIL</text>
+      <circle cx="722" cy="235" r="4" class="relay-indicator" id="k2-led"/>
+      <path d="M700 260 V490" class="wire gnd" id="w21"/>
+
+      <!-- ===== K2 OUTPUTS (from Node X) ===== -->
+      <path d="M700 120 H840 V300" class="wire" id="w26"/>
+      <text x="845" y="295" class="comp-sublabel" style="text-anchor:start">K2 COM</text>
+      <!-- K2 P1 NO -> SOL-A -->
+      <rect x="820" y="310" width="40" height="24" class="comp-body" id="k2-no-body"/>
+      <text x="840" y="326" class="comp-label" style="font-size:7px">K2 NO</text>
+      <path d="M840 334 V370" class="wire" id="w27"/>
+      <rect x="820" y="370" width="40" height="24" class="comp-body solenoid-body" id="sola-auto-body"/>
+      <text x="840" y="386" class="comp-label" style="font-size:8px">SOL-A</text>
+      <text x="840" y="400" class="comp-sublabel">EXTEND</text>
+      <path d="M840 394 V490" class="wire gnd" id="w27-gnd"/>
+      <!-- K2 P1 NC -> SOL-B -->
+      <rect x="820" y="410" width="40" height="24" class="comp-body" id="k2-nc-body"/>
+      <text x="840" y="426" class="comp-label" style="font-size:7px">K2 NC</text>
+      <path d="M840 434 V455" class="wire" id="w28"/>
+      <rect x="820" y="455" width="40" height="24" class="comp-body solenoid-body" id="solb-auto-body"/>
+      <text x="840" y="471" class="comp-label" style="font-size:8px">SOL-B</text>
+      <text x="840" y="487" class="comp-sublabel">RETRACT</text>
+      <path d="M840 479 V490" class="wire gnd" id="w28-gnd"/>
+      <!-- K2 COM splits to NO and NC -->
+      <path d="M840 300 V310" class="wire" id="k2-to-no"/>
+      <path d="M840 334 V410" class="wire" id="k2-no-to-nc"/>
+
+      <!-- ===== CYLINDER POSITION ===== -->
+      <rect x="100" y="440" width="280" height="20" class="cyl-track"/>
+      <rect x="102" y="442" width="28" height="16" class="cyl-rod" id="cyl-rod"/>
+      <text x="100" y="436" class="comp-sublabel" style="text-anchor:start;font-size:8px">HOME</text>
+      <text x="380" y="436" class="comp-sublabel" style="text-anchor:end;font-size:8px">EXTEND</text>
+      <text x="240" y="436" class="comp-sublabel" style="font-size:7px">CYLINDER POSITION</text>
+    </svg>
+  </div>
+
+  <div class="controls-bar">
+    <button class="ctrl-btn" id="btn-fwd">▶ FWD</button>
+    <button class="ctrl-btn" id="btn-bwd">◀ BWD</button>
+    <div class="ctrl-sep"></div>
+    <button class="ctrl-btn" id="btn-cycle">⟳ CYCLE</button>
+    <div class="ctrl-sep"></div>
+    <button class="ctrl-btn" id="btn-estop">⛔ E-STOP</button>
+    <div class="ctrl-sep"></div>
+    <button class="ctrl-btn" id="btn-extlim" style="font-size:.6rem">EXT LIM</button>
+    <button class="ctrl-btn" id="btn-retlim" style="font-size:.6rem">RET LIM</button>
+    <div class="status-pill" id="status"><span class="st">IDLE</span> — Ready</div>
+  </div>
+
+  <div class="info-bar" id="info-bar">
+    <span><span class="dot off" id="d-k1"></span>K1</span>
+    <span><span class="dot off" id="d-k2"></span>K2</span>
+    <span><span class="dot off" id="d-k3"></span>K3</span>
+    <span><span class="dot off" id="d-nx"></span>Node X</span>
+    <span><span class="dot off" id="d-sola"></span>SOL-A</span>
+    <span><span class="dot off" id="d-solb"></span>SOL-B</span>
+    <span id="pos-text">POS: 0%</span>
+  </div>
+</div>
+
+<script>
+const SIM_SPEED = 40;
+const S = {
+  pos:0, k1:false, k2:false, k3:false, nodeX:false,
+  solA:false, solB:false, extLim:false, retLim:true,
+  estop:false, jogging:null, cycling:false, cycleHeld:false,
+  phase:'idle', af:null, lt:0
+};
+
+function updateLimits(){ S.extLim=(S.pos>=98); S.retLim=(S.pos<=2); }
+
+function evaluate(){
+  if(S.estop){
+    S.k1=S.k2=S.k3=S.nodeX=S.solA=S.solB=false;
+    S.cycling=false; S.jogging=null; S.phase='estop'; return;
+  }
+  var fNC=(S.jogging!=='fwd'), bNC=(S.jogging!=='bwd'), rNC=!S.retLim;
+  var seal=S.k1&&fNC&&bNC&&rNC;
+  S.k1=S.cycleHeld||seal;
+  S.nodeX=S.k1;
+  if(S.nodeX&&S.extLim&&!S.k3) S.k3=true;
+  if(!S.nodeX) S.k3=false;
+  S.k2=S.nodeX&&!S.k3;
+  var ae=S.k1&&S.nodeX&&S.k2, ar=S.k1&&S.nodeX&&!S.k2&&S.k3;
+  var jA=(S.jogging==='fwd'), jB=(S.jogging==='bwd');
+  S.solA=ae||jA; S.solB=ar||jB;
+  if(S.k1&&S.k2&&!S.k3){S.phase='extending';S.cycling=true;}
+  else if(S.k1&&S.k3&&!S.k2){S.phase='retracting';}
+  else if(!S.k1&&!S.k2&&!S.k3){
+    S.cycling=false;
+    S.phase=S.jogging?(S.jogging==='fwd'?'jog_fwd':'jog_bwd'):'idle';
+  }
+}
+
+function jog(d,p){
+  if(S.estop)return;
+  if(p){S.jogging=d;startLoop();}else{if(S.jogging===d)S.jogging=null;}
+  evaluate();render();
+}
+function cycle(p){
+  if(S.estop)return;
+  S.cycleHeld=p;
+  if(p&&!S.cycling)startLoop();
+  evaluate();render();
+}
+function estop(){
+  S.estop=true;S.cycleHeld=false;evaluate();render();
+  setTimeout(function(){S.estop=false;S.phase='idle';updateLimits();evaluate();render();},2000);
+}
+
+function startLoop(){if(S.af)return;S.lt=performance.now();S.af=requestAnimationFrame(tick);}
+function tick(n){
+  var dt=(n-S.lt)/1000;S.lt=n;
+  if(S.estop){S.af=null;return;}
+  var m=false;
+  if(S.solA&&S.pos<100){S.pos=Math.min(100,S.pos+SIM_SPEED*dt);m=true;}
+  if(S.solB&&S.pos>0){S.pos=Math.max(0,S.pos-SIM_SPEED*dt);m=true;}
+  updateLimits();evaluate();render();
+  if(m||S.cycling||S.jogging)S.af=requestAnimationFrame(tick);else S.af=null;
+}
+
+function $(id){return document.getElementById(id);}
+function hot(id,on){var e=$(id);if(e)e.classList.toggle('hot',on);}
+function cls(id,c,on){var e=$(id);if(e)e.classList.toggle(c,on);}
+
+function render(){
+  var busHot=!S.estop;
+  hot('w01',busHot);hot('w02',busHot);hot('w03',busHot);hot('busA',busHot);
+
+  // FWD jog path
+  var fwdJog=(S.jogging==='fwd')&&busHot;
+  hot('w04a',busHot);hot('w05a',fwdJog);hot('w06a',fwdJog);
+  cls('fwd-no-body','energized',fwdJog);
+  cls('sola-jog-body','firing',fwdJog);
+
+  // BWD jog path
+  var bwdJog=(S.jogging==='bwd')&&busHot;
+  hot('w07a',busHot);hot('w08a',bwdJog);hot('w09a',bwdJog);
+  cls('bwd-no-body','energized',bwdJog);
+  cls('solb-jog-body','firing',bwdJog);
+
+  // K1 direct path
+  var cyclePressed=S.cycleHeld&&busHot;
+  hot('w10',busHot);hot('w11',cyclePressed);
+  cls('cycle-body','energized',cyclePressed);
+
+  // K1 coil
+  var k1hot=S.k1&&busHot;
+  cls('k1-coil','energized',k1hot);
+  cls('k1-led','on',k1hot);
+  hot('w16',k1hot);
+
+  // K1 seal path
+  var sealHot=S.k1&&busHot&&!S.cycleHeld;
+  hot('w12',busHot);
+  hot('w13',S.k1&&busHot);
+  cls('k1p1-body','energized',S.k1);
+  var fwdNCclosed=(S.jogging!=='fwd');
+  var bwdNCclosed=(S.jogging!=='bwd');
+  var retNCclosed=!S.retLim;
+  hot('w31',S.k1&&fwdNCclosed&&busHot);
+  hot('w32',S.k1&&fwdNCclosed&&bwdNCclosed&&busHot);
+  hot('w14',S.k1&&fwdNCclosed&&bwdNCclosed&&retNCclosed&&busHot);
+  cls('fwd-nc-body','energized',!fwdNCclosed);
+  cls('bwd-nc-body','energized',!bwdNCclosed);
+  cls('retlim-nc-body','energized',!retNCclosed);
+
+  // Node X
+  var nxHot=S.nodeX&&busHot;
+  hot('w17',busHot);hot('w18',nxHot);
+  cls('k1p2-body','energized',S.k1);
+  cls('nodeX-dot','hot',nxHot);
+  hot('nx-down',nxHot);
+
+  // K3 path
+  hot('w22',nxHot);
+  cls('extlim-body','energized',S.extLim);
+  hot('w23',nxHot&&S.extLim);
+  cls('k3-coil','energized',S.k3);
+  cls('k3-led','on',S.k3);
+  hot('w25',S.k3&&busHot);
+  // K3 seal
+  cls('k3p2-body','energized',S.k3);
+  hot('w24',S.k3&&nxHot);
+  hot('w24-feed',nxHot);
+
+  // K2 path (through K3 NC)
+  hot('w19-down',nxHot);
+  cls('k3p1nc-body','energized',S.k3);
+  hot('w20',nxHot&&!S.k3);
+  cls('k2-coil','energized',S.k2);
+  cls('k2-led','on',S.k2);
+  hot('w21',S.k2&&busHot);
+
+  // K2 outputs
+  hot('w26',nxHot);
+  hot('k2-to-no',nxHot);
+  var solAauto=S.k2&&nxHot;
+  var solBauto=!S.k2&&S.k3&&nxHot;
+  cls('k2-no-body','energized',S.k2);
+  cls('k2-nc-body','energized',!S.k2&&S.k3);
+  hot('w27',solAauto);
+  cls('sola-auto-body','firing',solAauto);
+  hot('w27-gnd',solAauto);
+  hot('k2-no-to-nc',nxHot&&!S.k2);
+  hot('w28',solBauto);
+  cls('solb-auto-body','firing',solBauto);
+  hot('w28-gnd',solBauto);
+
+  // Cylinder
+  var rod=$('cyl-rod');
+  if(rod) rod.setAttribute('width',Math.max(28,S.pos*2.76));
+
+  // Buttons
+  $('btn-fwd').className='ctrl-btn'+(S.jogging==='fwd'?' active-fwd':'');
+  $('btn-bwd').className='ctrl-btn'+(S.jogging==='bwd'?' active-bwd':'');
+  $('btn-cycle').className='ctrl-btn'+(S.cycling?' active-cycle':'');
+  $('btn-estop').className='ctrl-btn'+(S.estop?' active-estop':'');
+  cls('btn-extlim','active-fwd',S.extLim);
+  cls('btn-retlim','active-bwd',S.retLim);
+
+  // Status
+  var sm={idle:'<span class="st">IDLE</span> — Ready',extending:'<span class="st">EXTENDING</span> — K1+K2, SOL-A',retracting:'<span class="st">RETRACTING</span> — K1+K3, SOL-B',jog_fwd:'<span class="st">JOG FWD</span> — Manual',jog_bwd:'<span class="st">JOG BWD</span> — Manual',estop:'<span class="st" style="color:var(--red)">E-STOP</span>'};
+  $('status').innerHTML=sm[S.phase]||'';
+
+  // Info dots
+  function setDot(id,on){$(id).className='dot '+(on?'on':'off');}
+  setDot('d-k1',S.k1);setDot('d-k2',S.k2);setDot('d-k3',S.k3);
+  setDot('d-nx',S.nodeX);setDot('d-sola',S.solA);setDot('d-solb',S.solB);
+  $('pos-text').textContent='POS: '+Math.round(S.pos)+'%';
+}
+
+// Init
+document.addEventListener('DOMContentLoaded',function(){
+  updateLimits();render();
+  var f=$('btn-fwd'),b=$('btn-bwd'),c=$('btn-cycle');
+  f.onmousedown=function(){jog('fwd',true);};f.onmouseup=f.onmouseleave=function(){jog('fwd',false);};
+  f.ontouchstart=function(e){e.preventDefault();jog('fwd',true);};f.ontouchend=function(e){e.preventDefault();jog('fwd',false);};
+  b.onmousedown=function(){jog('bwd',true);};b.onmouseup=b.onmouseleave=function(){jog('bwd',false);};
+  b.ontouchstart=function(e){e.preventDefault();jog('bwd',true);};b.ontouchend=function(e){e.preventDefault();jog('bwd',false);};
+  c.onmousedown=function(){cycle(true);};c.onmouseup=c.onmouseleave=function(){cycle(false);};
+  c.ontouchstart=function(e){e.preventDefault();cycle(true);};c.ontouchend=function(e){e.preventDefault();cycle(false);};
+  $('btn-estop').onclick=estop;
+  $('btn-extlim').onclick=function(){S.extLim=!S.extLim;evaluate();render();};
+  $('btn-retlim').onclick=function(){S.retLim=!S.retLim;evaluate();render();};
+});
+</script>
+</body>
+</html>
